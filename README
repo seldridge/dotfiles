@@ -1,0 +1,15 @@
+Schuyler Eldridge
+Created 01.20.2012
+
+Contains configuration files used across multiple machines:
+
+.bashrc
+
+.elisp - contains all the additional features that I use in emacs,
+  specifically, verilog-mode and icicles.
+
+.emacs
+
+.emacs.symlink_fix - rough fix to get around the Windows version of
+  emacs disliking symlinks. This should go in you home folder to cause
+  emacs to load the actual .emacs file in ~/dotfiles/.emacs.
