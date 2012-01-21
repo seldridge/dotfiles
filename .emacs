@@ -6,6 +6,7 @@
 ;; TODO
 ;; 1) Custom shell creation stuff
 ;; 2) Colors
+;; 3) Fix how prepend-path is handled
 ;;--------------------------------------
 
 (defun prepend-path ( my-path )
@@ -14,7 +15,7 @@
 (defun append-path ( my-path )
 (setq load-path (append load-path (list (expand-file-name my-path)))))
 ;; Look first in the directory ~/.elisp for elisp files
-(prepend-path "~/.elisp")
+(prepend-path "~/dotfiles/.elisp")
 (load-library "matlab-load")
 ;;(load "~/.elisp/icicles-install")
 
@@ -144,7 +145,7 @@
 (add-hook 'verilog-mode-hook '(lambda () (font-lock-mode 1)))
 
 ;; icicles
-(add-to-list 'load-path "~/.elisp/icicles")
+(add-to-list 'load-path "~/dotfiles/.elisp/icicles")
 (require 'ring+)
 (require 'icicles)
 
