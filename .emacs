@@ -15,7 +15,8 @@
 (defun append-path ( my-path )
 (setq load-path (append load-path (list (expand-file-name my-path)))))
 ;; Look first in the directory ~/.elisp for elisp files
-(prepend-path "~/dotfiles/.elisp")
+(prepend-path "~/dotfiles/.elisp/")
+(add-to-list 'load-path "~/dotfiles/.elisp/matlab-emacs/matlab-emacs")
 (load-library "matlab-load")
 ;;(load "~/.elisp/icicles-install")
 

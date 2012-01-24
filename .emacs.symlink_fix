@@ -19,4 +19,4 @@
 ;; because they can follow symlinks. However, using this file instead
 ;; of a simlink would be fine. 
 
-(load-file "dotfiles/.emacs")
+(load-file "~/dotfiles/.emacs")
