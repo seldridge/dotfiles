@@ -20,8 +20,6 @@
 (load-library "matlab-load")
 ;; color-theme stuff - remove this when emacs 24 is available
 (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
-(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/emacs-color-theme-solarized")
-(require 'color-theme-solarized)
 (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
 (require 'color-theme-tangotango)
 (require 'color-theme)
