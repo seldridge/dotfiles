@@ -8,16 +8,27 @@
 ;; 2) Colors
 ;; 3) Fix how prepend-path is handled
 ;;--------------------------------------
-
+;; generic path defuns - what do these do exactly?
 (defun prepend-path ( my-path )
 (setq load-path (cons (expand-file-name my-path) load-path)))
-	  
 (defun append-path ( my-path )
 (setq load-path (append load-path (list (expand-file-name my-path)))))
 ;; Look first in the directory ~/.elisp for elisp files
 (prepend-path "~/dotfiles/.elisp/")
+;; load matlab mode
 (add-to-list 'load-path "~/dotfiles/.elisp/matlab-emacs/matlab-emacs")
 (load-library "matlab-load")
+;; color-theme stuff - remove this when emacs 24 is available
+(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
+(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/emacs-color-theme-solarized")
+(require 'color-theme-solarized)
+(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
+(require 'color-theme-tangotango)
+(require 'color-theme)
+(eval-after-load "color-theme"
+  '(progn
+   (color-theme-initialize)
+     (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
 
 ;;-------------------------------------- Flags
@@ -34,9 +45,9 @@
 (setq truncate-partial-width-windows nil)
 ;(setq explicit-shell-args '("--login" "-i"))
 (setq inhibit-splash-screen t)
-(set-background-color "black")
-(set-foreground-color "white")
-(set-cursor-color "white")
+;;(set-background-color "black")
+;;(set-foreground-color "white")
+;;(set-cursor-color "white")
 ;(setq-default indent-tabs-mode nil)
 ;(setq-default tab-width 2)
 ;(setq tramp-default-user "root")
