@@ -4,15 +4,17 @@
 ;;--------------------------------------
 ;;--------------------------------------
 ;; TODO
+;; 0) Cleanup
 ;; 1) Custom shell creation stuff
-;; 2) Colors
-;; 3) Fix how prepend-path is handled
+;; 2) Colors [DONE?]
+;; 3) Fix how prepend-path is handled - what?
+;; 4) Add rainbow-delimiters.el?
 ;;--------------------------------------
 ;; generic path defuns - what do these do exactly?
 (defun prepend-path ( my-path )
-(setq load-path (cons (expand-file-name my-path) load-path)))
+  (setq load-path (cons (expand-file-name my-path) load-path)))
 (defun append-path ( my-path )
-(setq load-path (append load-path (list (expand-file-name my-path)))))
+  (setq load-path (append load-path (list (expand-file-name my-path)))))
 ;; Look first in the directory ~/.elisp for elisp files
 (prepend-path "~/dotfiles/.elisp/")
 ;; load matlab mode
@@ -25,7 +27,7 @@
 (require 'color-theme)
 (eval-after-load "color-theme"
   '(progn
-   (color-theme-initialize)
+     (color-theme-initialize)
      (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
 
@@ -71,8 +73,8 @@
   "Ask if you really meant to hit inconify emacs"
   (interactive)
   (if (y-or-n-p (format "Do you really want to inconify? "))
-    (iconify-or-deiconify-frame)
-  (message "I thought so...")))
+      (iconify-or-deiconify-frame)
+    (message "I thought so...")))
 (when window-system
   (global-set-key (kbd "C-z") 'ask-before-inconify))
 
@@ -95,42 +97,42 @@
   (interactive)
   (let ((explicit-shell-file-name "C:/cygwin/bin/bash"))
     (call-interactively 'shell)))
-;;
+
 (defun my-filter (condp lst)
-     (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
+  (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 (defun shell-dwim (&optional create)
-    "Start or switch to an inferior shell process, in a smart
+  "Start or switch to an inferior shell process, in a smart
   way.  If a buffer with a running shell process exists, simply
   switch to that buffer.  If a shell buffer exists, but the shell
   process is not running, restart the shell.  If already in an
   active shell buffer, switch to the next one, if any.  With
   prefix argument CREATE always start a new shell."
-    (interactive "P")
-    (let ((next-shell-buffer) (buffer)
-          (shell-buf-list (identity ;;used to be reverse                                                                         
-                           (sort
-                            (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
-                            '(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
-      (setq next-shell-buffer
-            (if (string-match "^\\*shell\\*" (buffer-name buffer))
-                (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
-              nil))
-      (setq buffer
-            (if create
-                (generate-new-buffer-name "*shell*")
-              next-shell-buffer))
-      (shell buffer)))
+  (interactive "P")
+  (let ((next-shell-buffer) (buffer)
+	(shell-buf-list (identity ;;used to be reverse 
+			 (sort
+			  (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
+			  '(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
+    (setq next-shell-buffer
+	  (if (string-match "^\\*shell\\*" (buffer-name buffer))
+	      (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
+	    nil))
+    (setq buffer
+	  (if create
+	      (generate-new-buffer-name "*shell*")
+	    next-shell-buffer))
+    (shell buffer)))
 ;; count words in the region
 (defun count-words-region (start end)
-       (interactive "r")
-       (save-excursion
-          (let ((n 0))
-           (goto-char start)
-           (while (< (point) end)
-             (if (forward-word 1)
-                 (setq n (1+ n))))
-           (message "Region has %d words" n)
-           n)))
+  (interactive "r")
+  (save-excursion
+    (let ((n 0))
+      (goto-char start)
+      (while (< (point) end)
+	(if (forward-word 1)
+	    (setq n (1+ n))))
+      (message "Region has %d words" n)
+      n)))
 
 (defun revert-buffer-fast ()
   "Revert buffer without confirmation."
@@ -174,17 +176,16 @@
 
 ;;-------------------------------------- Startup
 (defun se-startup()
-(server-start)
-(split-window-horizontally)
-(split-window-vertically)
-(other-window 1)
-(other-window 1)
-(split-window-vertically)
-(other-window 1)
-(other-window 1)
-(icy-mode 1)
-)
-
+  ;; Creates a four panel emacs workspace and starts icicles
+  (server-start)
+  (split-window-horizontally)
+  (split-window-vertically)
+  (other-window 1)
+  (other-window 1)
+  (split-window-vertically)
+  (other-window 1)
+  (other-window 1)
+  (icy-mode 1))
 
 (add-hook `emacs-startup-hook `se-startup)
 
