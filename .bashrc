@@ -1,4 +1,4 @@
-alias l="ls -la";
+alias l="ls -lah";
 if   [ $TERM == "emacs" ]
 then
   PS1="emacs -> [\u@\h: \w]\n> ";

@@ -48,11 +48,12 @@
 ;;(set-background-color "black")
 ;;(set-foreground-color "white")
 ;;(set-cursor-color "white")
-;(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 ;(setq-default tab-width 2)
 ;(setq tramp-default-user "root")
 (setq fill-column 80)
 (setq column-number-mode t)
+(setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 
 ;;-------------------------------------- Functions
 
@@ -83,7 +84,7 @@
   "Creates new shell from user string."
   (interactive)
   (setq buffer 
-	(read-string "Enter shell name: "))
+        (read-string "Enter shell name: "))
   (shell (concat "$" buffer)))
 ;;(shell "*shell*<%s>" `shell-name))
 
@@ -97,6 +98,13 @@
   (interactive)
   (let ((explicit-shell-file-name "C:/cygwin/bin/bash"))
     (call-interactively 'shell)))
+;; Attempts to get cygwin ssh to work through emacs shell
+;;(require 'tramp)
+;;(setq tramp-default-method "ssh")
+;;(nconc (cadr (assq 'tramp-login-args (assoc "ssh" tramp-methods)))
+;;       '(("bash" "-i")))
+;;(setcdr (assq 'tramp-remote-sh (assoc "ssh" tramp-methods))
+;;      '("bash -i"))
 
 (defun my-filter (condp lst)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
@@ -109,18 +117,18 @@
   prefix argument CREATE always start a new shell."
   (interactive "P")
   (let ((next-shell-buffer) (buffer)
-	(shell-buf-list (identity ;;used to be reverse 
-			 (sort
-			  (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
-			  '(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
+        (shell-buf-list (identity ;;used to be reverse 
+                         (sort
+                          (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
+                          '(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
     (setq next-shell-buffer
-	  (if (string-match "^\\*shell\\*" (buffer-name buffer))
-	      (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
-	    nil))
+          (if (string-match "^\\*shell\\*" (buffer-name buffer))
+              (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
+            nil))
     (setq buffer
-	  (if create
-	      (generate-new-buffer-name "*shell*")
-	    next-shell-buffer))
+          (if create
+              (generate-new-buffer-name "*shell*")
+            next-shell-buffer))
     (shell buffer)))
 ;; count words in the region
 (defun count-words-region (start end)
@@ -129,14 +137,30 @@
     (let ((n 0))
       (goto-char start)
       (while (< (point) end)
-	(if (forward-word 1)
-	    (setq n (1+ n))))
+        (if (forward-word 1)
+            (setq n (1+ n))))
       (message "Region has %d words" n)
       n)))
 
 (defun revert-buffer-fast ()
   "Revert buffer without confirmation."
   (interactive) (revert-buffer t t))
+
+(defun increment-number-decimal (&optional arg)
+  "Increment the number forward from point by 'arg'."
+  (interactive "p*")
+  (save-excursion
+    (save-match-data
+      (let (inc-by field-width answer)
+        (setq inc-by (if arg arg 1))
+        (skip-chars-backward "0123456789")
+        (when (re-search-forward "[0-9]+" nil t)
+          (setq field-width (- (match-end 0) (match-beginning 0)))
+          (setq answer (+ (string-to-number (match-string 0) 10) inc-by))
+          (when (< answer 0)
+            (setq answer (+ (expt 10 field-width) answer)))
+          (replace-match (format (concat "%0" (int-to-string field-width) "d")
+                                 answer)))))))
 ;;-------------------------------------- Binds
 (global-set-key (kbd "M-g g") `goto-line)
 (global-set-key (kbd "C-S-h") `windmove-left)
@@ -152,9 +176,27 @@
 
 ;; syntax highlighting
 (global-font-lock-mode 1)
+
+;; verilog-mode
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
-;; verilog mode customization
 (add-hook 'verilog-mode-hook '(lambda () (font-lock-mode 1)))
+(setq verilog-indent-level             2
+      verilog-indent-level-module      2
+      verilog-indent-level-declaration 2
+      verilog-indent-level-behavioral  2
+;;      verilog-indent-level-directive   1
+;;      verilog-case-indent              2
+;;      verilog-auto-newline             t
+;;      verilog-auto-indent-on-newline   t
+;;      verilog-tab-always-indent        t
+;;      verilog-auto-endcomments         t
+;;      verilog-minimum-comment-distance 40
+;;      verilog-indent-begin-after-if    t
+      verilog-auto-lineup              'all
+;;      verilog-highlight-p1800-keywords nil
+;;      verilog-linter                   "my_lint_shell_command"
+      verilog-auto-delete-trailing-whitespace t
+        )
 
 ;; icicles
 (add-to-list 'load-path "~/dotfiles/.elisp/icicles")
@@ -197,7 +239,7 @@
   (let* ((cygwin-root "c:/cygwin")
          (cygwin-bin (concat cygwin-root "/bin")))
     (when (and (eq 'windows-nt system-type)
-  	     (file-readable-p cygwin-root))
+             (file-readable-p cygwin-root))
     
       (setq exec-path (cons cygwin-bin exec-path))
       (setenv "PATH" (concat cygwin-bin ";" (getenv "PATH")))
