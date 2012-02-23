@@ -227,8 +227,8 @@
   (split-window-vertically)
   (other-window 1)
   (other-window 1)
-  (icy-mode 1))
-
+;; (icy-mode 1)
+)
 (add-hook `emacs-startup-hook `se-startup)
 
 ;;-------------------------------------- Test Area
