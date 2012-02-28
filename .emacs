@@ -23,6 +23,7 @@
 ;; color-theme stuff - remove this when emacs 24 is available
 (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
 (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
+(require 'cc-mode)
 (require 'color-theme-tangotango)
 (require 'color-theme)
 (eval-after-load "color-theme"
@@ -170,7 +171,7 @@
 ;; Meta S Key Bindings 
 (global-set-key (kbd "M-s t") `toggle-truncate-lines)
 (global-set-key (kbd "M-s n") `shell-new)
-
+(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;;-------------------------------------- Modes
 
