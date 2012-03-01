@@ -67,8 +67,6 @@
 ;;          (save-buffers-kill-terminal)
       (save-buffers-kill-emacs);;)
     (message "Whew... you owe me...")))
-(when window-system
-  (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 ;; annoyance net
 (defun ask-before-inconify ()
@@ -77,8 +75,6 @@
   (if (y-or-n-p (format "Do you really want to inconify? "))
       (iconify-or-deiconify-frame)
     (message "I thought so...")))
-(when window-system
-  (global-set-key (kbd "C-z") 'ask-before-inconify))
 
 ;; create new shell
 (defun shell-new ()
@@ -168,9 +164,15 @@
 (global-set-key (kbd "C-S-j") `windmove-down)
 (global-set-key (kbd "C-S-k") `windmove-up)
 (global-set-key (kbd "C-S-l") `windmove-right)
-;; Meta S Key Bindings 
+(when window-system
+  (global-set-key (kbd "C-z") 'ask-before-inconify))
+(when window-system
+  (global-set-key (kbd "C-x C-c") 'ask-before-closing))
+;; meta s key bindings 
 (global-set-key (kbd "M-s t") `toggle-truncate-lines)
 (global-set-key (kbd "M-s n") `shell-new)
+(global-set-key (kbd "M-s r") `revert-buffer-fast)
+;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;;-------------------------------------- Modes
