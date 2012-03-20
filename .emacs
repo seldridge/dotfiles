@@ -164,6 +164,7 @@
 (global-set-key (kbd "C-S-j") `windmove-down)
 (global-set-key (kbd "C-S-k") `windmove-up)
 (global-set-key (kbd "C-S-l") `windmove-right)
+(global-set-key (kbd "C-x C-b") `buffer-menu)
 (when window-system
   (global-set-key (kbd "C-z") 'ask-before-inconify))
 (when window-system
@@ -172,6 +173,7 @@
 (global-set-key (kbd "M-s t") `toggle-truncate-lines)
 (global-set-key (kbd "M-s n") `shell-new)
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
+(global-set-key (kbd "M-s ;") `comment-dwim)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
