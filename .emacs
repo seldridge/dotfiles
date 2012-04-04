@@ -32,6 +32,7 @@
      (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
 
+
 ;;-------------------------------------- Flags
 (menu-bar-mode -1)
 (tool-bar-mode -1)
