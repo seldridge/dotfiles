@@ -195,7 +195,7 @@
 ;;      verilog-auto-newline             t
 ;;      verilog-auto-indent-on-newline   t
 ;;      verilog-tab-always-indent        t
-;;      verilog-auto-endcomments         t
+      verilog-auto-endcomments         nil
 ;;      verilog-minimum-comment-distance 40
 ;;      verilog-indent-begin-after-if    t
       verilog-auto-lineup              'all
@@ -205,9 +205,9 @@
         )
 
 ;; icicles
-(add-to-list 'load-path "~/dotfiles/.elisp/icicles")
-(require 'ring+)
-(require 'icicles)
+;; (add-to-list 'load-path "~/dotfiles/.elisp/icicles")
+;; (require 'ring+)
+;; (require 'icicles)
 
 ;; mode by file extension
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
@@ -224,7 +224,7 @@
 
 ;;-------------------------------------- Startup
 (defun se-startup()
-  ;; Creates a four panel emacs workspace and starts icicles
+  ;; Creates a four panel emacs workspace
   (server-start)
   (split-window-horizontally)
   (split-window-vertically)
