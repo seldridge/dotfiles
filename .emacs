@@ -183,6 +183,9 @@
 ;; syntax highlighting
 (global-font-lock-mode 1)
 
+;; cuda-mode
+(autoload 'cuda-mode "cuda-mode" "Cuda Mode" t)
+
 ;; verilog-mode
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
 (add-hook 'verilog-mode-hook '(lambda () (font-lock-mode 1)))
@@ -215,6 +218,7 @@
 (setq auto-mode-alist (cons '("\\.pde$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cu$". cuda-mode) auto-mode-alist))
 
 ;;-------------------------------------- Enabled Commands
 
