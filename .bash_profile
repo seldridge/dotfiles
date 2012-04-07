@@ -1,0 +1,2 @@
+TEXINPUTS=:.:..:~/texinputs
+export TEXINPUTS
