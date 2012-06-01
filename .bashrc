@@ -7,4 +7,5 @@ then
   PS1="? -> [\u@\h: \w]\n> ";
 else
   PS1="\e[0;34m\u@\h: \w\$\n>\e[m ";
+  PS1="\[\033[G\]$PS1"
 fi

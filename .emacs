@@ -165,6 +165,7 @@
 (global-set-key (kbd "C-S-j") `windmove-down)
 (global-set-key (kbd "C-S-k") `windmove-up)
 (global-set-key (kbd "C-S-l") `windmove-right)
+(global-set-key (kbd "<C-tab>") `other-frame)
 (global-set-key (kbd "C-x C-b") `buffer-menu)
 (when window-system
   (global-set-key (kbd "C-z") 'ask-before-inconify))
