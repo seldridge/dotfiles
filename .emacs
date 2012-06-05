@@ -56,6 +56,7 @@
 (setq fill-column 80)
 (setq column-number-mode t)
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
+(setq visible-bell t)
 
 ;;-------------------------------------- Functions
 
