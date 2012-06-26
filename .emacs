@@ -31,6 +31,8 @@
      (color-theme-initialize)
      (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
+(require `edit-server)
+(edit-server-start)
 
 
 ;;-------------------------------------- Flags
@@ -208,6 +210,12 @@
 ;;      verilog-linter                   "my_lint_shell_command"
       verilog-auto-delete-trailing-whitespace t
         )
+
+;; matlab mode
+;;(setq matlab-indent-level 2
+;;      matlab-cont-level   2)
+;;      matlab-case-level  '(1.1))
+;;      matlab-auto-fill    )
 
 ;; icicles
 ;; (add-to-list 'load-path "~/dotfiles/.elisp/icicles")
