@@ -31,6 +31,8 @@
      (color-theme-initialize)
      (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
+;;(add-to-list 'load-path "~/dotfiles/.elisp/magit-1.1.1")
+;;(require `magit)
 (require `edit-server)
 (edit-server-start)
 
@@ -84,7 +86,7 @@
 (defun shell-new ()
   "Creates new shell from user string."
   (interactive)
-  (setq buffer 
+  (setq buffer
         (read-string "Enter shell name: "))
   (shell (concat "$" buffer)))
 ;;(shell "*shell*<%s>" `shell-name))
@@ -118,7 +120,7 @@
   prefix argument CREATE always start a new shell."
   (interactive "P")
   (let ((next-shell-buffer) (buffer)
-        (shell-buf-list (identity ;;used to be reverse 
+        (shell-buf-list (identity ;;used to be reverse
                          (sort
                           (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
                           '(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
@@ -174,11 +176,12 @@
   (global-set-key (kbd "C-z") 'ask-before-inconify))
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
-;; meta s key bindings 
+;; meta s key bindings
 (global-set-key (kbd "M-s t") `toggle-truncate-lines)
 (global-set-key (kbd "M-s n") `shell-new)
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
 (global-set-key (kbd "M-s ;") `comment-dwim)
+;;(global-set-key (kbd "M-s g") `magit-status)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
@@ -249,7 +252,10 @@
   (other-window 1)
 ;; (icy-mode 1)
 )
+
+;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
+;;(add-hook `before-save-hook `delete-trailing-whitespace)
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
@@ -260,19 +266,19 @@
          (cygwin-bin (concat cygwin-root "/bin")))
     (when (and (eq 'windows-nt system-type)
              (file-readable-p cygwin-root))
-    
+
       (setq exec-path (cons cygwin-bin exec-path))
       (setenv "PATH" (concat cygwin-bin ";" (getenv "PATH")))
-    
+
       ;; By default use the Windows HOME.
       ;; Otherwise, uncomment below to set a HOME
       ;;      (setenv "HOME" (concat cygwin-root "/home/eric"))
-    
+
       ;; NT-emacs assumes a Windows shell. Change to baash.
       (setq shell-file-name "bash")
-      (setenv "SHELL" shell-file-name) 
-      (setq explicit-shell-file-name shell-file-name) 
-    
+      (setenv "SHELL" shell-file-name)
+      (setq explicit-shell-file-name shell-file-name)
+
       ;; This removes unsightly ^M characters that would otherwise
       ;; appear in the output of java applications.
       (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
