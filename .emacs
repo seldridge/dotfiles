@@ -145,6 +145,21 @@
       (message "Region has %d words" n)
       n)))
 
+(defun count-region (beginning end)
+  "Print number of words and chars in region."
+  (interactive "r")
+  (message "Counting...")
+  (save-excursion
+    (let (word_count char_count)
+      (setq word_count 0)
+      (setq char_count (- end beginning))
+      (goto-char beginning)
+      (while (and (< (point) end)
+                  (re-search-forward "\\w+\\W*" end t))
+        (setq word_count (1+ word_count)))
+      (message "Words: %d | Characters: %d" word_count char_count)
+)))
+
 (defun revert-buffer-fast ()
   "Revert buffer without confirmation."
   (interactive) (revert-buffer t t))
