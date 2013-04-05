@@ -1,4 +1,5 @@
 alias l="ls -lah --color";
+alias grep="grep -n --color $@";
 if   [ $TERM == "emacs" ]
 then
   PS1="emacs -> [\u@\H: \w]\n> ";
