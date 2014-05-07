@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#xrandr | grep " connected" | sed -e "s/\([0-9]\+:\)\?\([A-Z0-9]\+\) connected.*/\2/"
+
+# The output names will be "VGA[0-9]+" and "LVDS[0-9]+". They are
+# strangely not always VGA1 and LVDS1 (I've seem them jump to VGA2,
+# LVDS2). I consequently have to figure out what their actual names
+# are before I can act on them.
+MAIN=$(xrandr | grep "LVDS" | sed -e "s/\([0-9]\+:\)\?\(LVDS[0-9]\+\) \(dis\)\?connected.*/\2/")
+SECONDARY=$(xrandr | grep "VGA" | sed -e "s/\([0-9]\+:\)\?\(VGA[0-9]\+\) \(dis\)\?connected.*/\2/")
+
+echo main:      $MAIN
+echo secondary: $SECONDARY
+
+if (xrandr | grep "$SECONDARY connected"); then
+    xrandr --output $MAIN --auto --primary --output $SECONDARY --auto --right-of $MAIN
+else
+    xrandr --output $MAIN --auto --output $SECONDARY --off
+fi

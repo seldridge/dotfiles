@@ -1,3 +1,4 @@
 #!/bin/sh
 # Open emacs client in the current terminal
 emacsclient "$@" -c -t
+

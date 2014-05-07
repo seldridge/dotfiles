@@ -1,0 +1,5 @@
+[user]
+	email = schuyler.eldridge@gmail.com
+	name = Schuyler Eldridge
+[core]
+	editor = emacs -nw

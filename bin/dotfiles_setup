@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+
+# Probably incomplete setup script that setups all the symlinks
+
+shopt -s dotglob
+
+DIR_DOTFILES=$HOME/dotfiles
+DIR_LINK_TO_HOME=`ls -a $DIR_DOTFILES/home_directory/ | grep \.[-a-zA-Z_0-9]$`
+DIR_BIN=`ls -a $DIR_DOTFILES/bin | grep \.[-a-zA-Z_0-9]$`
+DIR_I3=`ls -a $DIR_DOTFILES/.i3 | grep \.[-a-zA-Z_0-9]$`
+
+for i in $DIR_LINK_TO_HOME
+do
+    rm -f $HOME/$i
+    ln -s $DIR_DOTFILES/home_directory/$i $HOME/$i
+done
+
+for i in $DIR_BIN
+do
+    rm -f $HOME/usr/bin/$i
+    ln -s $DIR_DOTFILES/bin/$i $HOME/usr/bin/$i
+done
+
+for i in $DIR_I3
+do
+    rm -f $HOME/.i3/$i
+    ln -s $DIR_DOTFILES/.i3/$i $HOME/.i3/$i
+done
+
+shopt -u dotglob

@@ -57,10 +57,13 @@
 (setq-default indent-tabs-mode nil)
 ;(setq-default tab-width 2)
 ;(setq tramp-default-user "root")
-(setq fill-column 80)
+(setq tramp-auto-save-directory "/tmp")
+(set-fill-column 80)
 (setq column-number-mode t)
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 (setq visible-bell t)
+(set-default-font "Inconsolata 11")
+(setq comment-column 40)
 
 ;;-------------------------------------- Functions
 
@@ -181,6 +184,7 @@
 (global-set-key (kbd "M-s n") `shell-new)
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
 (global-set-key (kbd "M-s ;") `comment-dwim)
+(global-set-key (kbd "M-s :") `comment-indent)
 ;;(global-set-key (kbd "M-s g") `magit-status)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
@@ -255,7 +259,7 @@
 
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
-;;(add-hook `before-save-hook `delete-trailing-whitespace)
+(add-hook `before-save-hook `delete-trailing-whitespace)
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
