@@ -1,5 +1,8 @@
 alias l="ls -lah --color";
 alias grep="grep --color $@";
+alias p="pushd"
+alias o="popd"
+alias d="dirs -v"
 if   [ $TERM == "emacs" ]
 then
   PS1="emacs -> [\u@\H: \w]\n> ";
