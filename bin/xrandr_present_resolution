@@ -1,0 +1,13 @@
+#!/bin/bash
+
+MAIN=$(xrandr | grep "LVDS" | sed -e "s/\([0-9]\+:\)\?\(LVDS[0-9]\+\) \(dis\)\?connected.*/\2/")
+SECONDARY=$(xrandr | grep "VGA" | sed -e "s/\([0-9]\+:\)\?\(VGA[0-9]\+\) \(dis\)\?connected.*/\2/")
+
+MAIN_RES=$(xrandr | grep "$MAIN" | sed -e "s/\([0-9]\+:\)\?\(LVDS[0-9]\+\) connected \(primary \)\?\([0-9]\+x[0-9]\+\).*/\4/")
+SECONDARY_RES=$(xrandr | grep "$SECONDARY" | sed -e "s/\([0-9]\+:\)\?\(VGA[0-9]\+\) connected \(primary \)\?\([0-9]\+x[0-9]\+\).*/\4/")
+
+if (xrandr | grep "$SECONDARY connected" >> /dev/null); then
+    echo $SECONDARY_RES
+else
+    echo $MAIN_RES
+fi

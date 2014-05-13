@@ -12,7 +12,8 @@ SECONDARY=$(xrandr | grep "VGA" | sed -e "s/\([0-9]\+:\)\?\(VGA[0-9]\+\) \(dis\)
 echo main:      $MAIN
 echo secondary: $SECONDARY
 
-if (xrandr | grep "$SECONDARY connected"); then
+xrandr --output $SECONDARY --off
+if (xrandr | grep "$SECONDARY connected" >> /dev/null); then
     xrandr --output $MAIN --auto --primary --output $SECONDARY --auto --right-of $MAIN
 else
     xrandr --output $MAIN --auto --output $SECONDARY --off
