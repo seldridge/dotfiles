@@ -7,7 +7,5 @@ then
     # sshfs schuye@eng-grid.bu.edu:/ad /ad
 else
     echo "---------------------------------------- Stopping VPNC"
-    sudo umount /ad
-    killall ssh
-    sudo vpnc-disconnect
+    sudo umount /ad && killall ssh && sudo vpnc-disconnect
 fi
