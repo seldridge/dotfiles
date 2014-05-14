@@ -18,7 +18,7 @@ set $workspace_3 "3: edit"
 set $workspace_4 "4: vnc"
 set $workspace_5 "5: media"
 set $workspace_6 "6: misc"
-set $workspace_7 "7"
+set $workspace_7 "7: show"
 set $workspace_8 "8"
 set $workspace_9 "9"
 set $workspace_10 "10"
@@ -193,7 +193,7 @@ assign [class="Vncviewer"] $workspace_4
 assign [instance="^prompt-vnc$"] $workspace_4
 assign [instance="rdesktop"] $workspace_4
 assign [class="Vlc"] $workspace_5
-assign [class="python2.7"] $workspace_5
+assign [class="python2.7"] $workspace_7
 assign [class="Steam"] $workspace_6
 assign [class="FTL"] $workspace_6
 assign [class="Xournal"] $workspace_5
