@@ -10,6 +10,14 @@
 ;; 3) Fix how prepend-path is handled - what?
 ;; 4) Add rainbow-delimiters.el?
 ;;--------------------------------------
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(display-time-mode 1)
+(setq debug-on-error t)
+(setq inhibit-splash-screen t)
+
 ;; generic path defuns - what do these do exactly?
 (defun prepend-path ( my-path )
   (setq load-path (cons (expand-file-name my-path) load-path)))
@@ -21,46 +29,46 @@
 (add-to-list 'load-path "~/dotfiles/.elisp/matlab-emacs/matlab-emacs")
 (load-library "matlab-load")
 ;; color-theme stuff - remove this when emacs 24 is available
-(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
-(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
+(add-to-list 'custom-theme-load-path "~/dotfiles/themes")
+(load-theme 'tangotango t)
+;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
+;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
 (require 'cc-mode)
-(require 'color-theme-tangotango)
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-tangotango)))
+;; (require 'color-theme-tangotango)
+;; (require 'color-theme)
+;; (eval-after-load "color-theme"
+;;   '(progn
+;;      (color-theme-initialize)
+;;      (color-theme-tangotango)))
 ;;(load "~/.elisp/icicles-install")
 ;;(add-to-list 'load-path "~/dotfiles/.elisp/magit-1.1.1")
 ;;(require `magit)
 (require `edit-server)
 (edit-server-start)
 
-
 ;;-------------------------------------- Flags
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(display-time-mode 1)
+(set-default-font "Inconsolata-11")
+(setq mouse-autoselect-window nil) ;; focus follows mouse off
+(setq sentence-end-double-space nil) ;; sentences end with a single space
 (show-paren-mode t)
 (setq show-paren-delay 0)
 (setq show-paren-style (quote parenthesis))
 (auto-compression-mode 1)
-(setq debug-on-error t)
 ;(setq explicit-shell-file-name t)
-(setq truncate-partial-width-windows nil)
 ;(setq explicit-shell-args '("--login" "-i"))
-(setq inhibit-splash-screen t)
+(setq truncate-partial-width-windows nil)
 ;;(set-background-color "black")
 ;;(set-foreground-color "white")
 ;;(set-cursor-color "white")
 (setq-default indent-tabs-mode nil)
+(setq cperl-indent-level 2)
 ;(setq-default tab-width 2)
 ;(setq tramp-default-user "root")
 (setq fill-column 80)
 (setq column-number-mode t)
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 (setq visible-bell t)
+(setq compilation-scroll-output t)
 
 ;;-------------------------------------- Functions
 
@@ -94,6 +102,8 @@
 (setq comint-buffer-maximum-size 9999)
 (add-hook 'comint-output-filter-functions
           'comint-truncate-buffer)
+
+(add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; run cygwin shell
 (defun cygwin-shell ()
@@ -196,6 +206,7 @@
 (global-set-key (kbd "M-s n") `shell-new)
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
 (global-set-key (kbd "M-s ;") `comment-dwim)
+(global-set-key (kbd "M-s c") `compile)
 ;;(global-set-key (kbd "M-s g") `magit-status)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
@@ -217,7 +228,7 @@
       verilog-indent-level-behavioral  2
 ;;      verilog-indent-level-directive   1
 ;;      verilog-case-indent              2
-;;      verilog-auto-newline             t
+     verilog-auto-newline             nil
 ;;      verilog-auto-indent-on-newline   t
 ;;      verilog-tab-always-indent        t
       verilog-auto-endcomments         nil
@@ -227,6 +238,8 @@
 ;;      verilog-highlight-p1800-keywords nil
 ;;      verilog-linter                   "my_lint_shell_command"
       verilog-auto-delete-trailing-whitespace t
+      verilog-date-scientific-format t
+      verilog-company "Boston University"
         )
 
 ;; matlab mode
@@ -239,6 +252,14 @@
 ;; (add-to-list 'load-path "~/dotfiles/.elisp/icicles")
 ;; (require 'ring+)
 ;; (require 'icicles)
+
+;; packages
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+(unless (package-installed-p 'scala-mode2)
+  (package-refresh-contents) (package-install 'scala-mode2))
 
 ;; mode by file extension
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
@@ -270,7 +291,7 @@
 
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
-;;(add-hook `before-save-hook `delete-trailing-whitespace)
+(add-hook `before-save-hook `delete-trailing-whitespace)
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
@@ -297,3 +318,18 @@
       ;; This removes unsightly ^M characters that would otherwise
       ;; appear in the output of java applications.
       (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(any-variable EXPR)
+ '(custom-safe-themes
+   (quote
+    ("dbf8cb30319aa88d14c569ef4509bd2c9ad6c8c58e7e7a7ae61a872cb32e9de2" "7f329ccc6b229c2172dc540848aa195dd9fbd508bc96618a1ab0b1955dd1a5a7" "40517b254c121bf4d62d1b0a61075959d721f928ed941aa6a3c33a191ebb1490" "64905e72f368db9bbc1fc347e8c3ab016257c4286006be72b9e50db72b3b5164" "e5d899e8ca6ae9014855c533993b0c06095bb7c55a5b0aab8e71a07d94d9e352" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
