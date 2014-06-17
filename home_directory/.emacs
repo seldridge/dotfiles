@@ -286,3 +286,15 @@
       ;; This removes unsightly ^M characters that would otherwise
       ;; appear in the output of java applications.
       (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(tex-verbatim ((t (:family "inconsolata")))))
