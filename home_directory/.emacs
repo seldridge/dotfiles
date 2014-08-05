@@ -232,6 +232,12 @@
 ;; mode by file extension
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h++$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.c++$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hh$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.pde$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
@@ -291,7 +297,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(safe-local-variable-values
+   (quote
+    ((eval c-add-style "m5"
+           (quote
+            ((c-basic-offset . 4)
+             (indent-tabs-mode)
+             (c-offsets-alist
+              (substatement-open . 0)
+              (inline-open . 0)
+              (block-open . -4)
+              (case-label . 2)
+              (label . 2)
+              (statement-case-intro . 2)
+              (statement-case-open . 2)
+              (access-label . -2)
+              (innamespace . 0)))))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
