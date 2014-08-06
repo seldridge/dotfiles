@@ -249,6 +249,13 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+;;-------------------------------------- Packages
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
+
 ;;-------------------------------------- Startup
 (defun se-startup()
   ;; Creates a four panel emacs workspace
