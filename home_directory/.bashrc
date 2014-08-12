@@ -1,7 +1,8 @@
 alias l="ls -lah --color";
-alias ll="ls -U --color";
-alias less="less -r";
-#alias gcc="gcc44";
+alias grep="grep --color $@";
+alias p="pushd"
+alias o="popd"
+alias d="dirs -v"
 if   [ $TERM == "emacs" ]
 then
   PS1="emacs -> [\u@\H: \w]\n> ";
@@ -13,4 +14,4 @@ else
   PS1="\[\033[G\]$PS1"
 fi
 
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"

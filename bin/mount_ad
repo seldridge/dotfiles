@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sshfs -o workaround=rename schuye@enggrid.bu.edu:/ad /ad

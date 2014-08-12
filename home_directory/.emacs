@@ -64,11 +64,14 @@
 (setq cperl-indent-level 2)
 ;(setq-default tab-width 2)
 ;(setq tramp-default-user "root")
-(setq fill-column 80)
+(setq tramp-auto-save-directory "/tmp")
+(set-fill-column 80)
 (setq column-number-mode t)
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 (setq visible-bell t)
 (setq compilation-scroll-output t)
+(set-default-font "Inconsolata 11")
+(setq comment-column 40)
 
 ;;-------------------------------------- Functions
 
@@ -207,6 +210,7 @@
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
 (global-set-key (kbd "M-s ;") `comment-dwim)
 (global-set-key (kbd "M-s c") `compile)
+(global-set-key (kbd "M-s :") `comment-indent)
 ;;(global-set-key (kbd "M-s g") `magit-status)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
@@ -264,6 +268,12 @@
 ;; mode by file extension
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h++$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.c++$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hh$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.pde$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
@@ -274,6 +284,13 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+;;-------------------------------------- Packages
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
 
 ;;-------------------------------------- Startup
 (defun se-startup()
@@ -326,10 +343,26 @@
  '(any-variable EXPR)
  '(custom-safe-themes
    (quote
-    ("dbf8cb30319aa88d14c569ef4509bd2c9ad6c8c58e7e7a7ae61a872cb32e9de2" "7f329ccc6b229c2172dc540848aa195dd9fbd508bc96618a1ab0b1955dd1a5a7" "40517b254c121bf4d62d1b0a61075959d721f928ed941aa6a3c33a191ebb1490" "64905e72f368db9bbc1fc347e8c3ab016257c4286006be72b9e50db72b3b5164" "e5d899e8ca6ae9014855c533993b0c06095bb7c55a5b0aab8e71a07d94d9e352" default))))
+    ("dbf8cb30319aa88d14c569ef4509bd2c9ad6c8c58e7e7a7ae61a872cb32e9de2" "7f329ccc6b229c2172dc540848aa195dd9fbd508bc96618a1ab0b1955dd1a5a7" "40517b254c121bf4d62d1b0a61075959d721f928ed941aa6a3c33a191ebb1490" "64905e72f368db9bbc1fc347e8c3ab016257c4286006be72b9e50db72b3b5164" "e5d899e8ca6ae9014855c533993b0c06095bb7c55a5b0aab8e71a07d94d9e352" default)))
+ '(safe-local-variable-values
+   (quote
+    ((eval c-add-style "m5"
+           (quote
+            ((c-basic-offset . 4)
+             (indent-tabs-mode)
+             (c-offsets-alist
+              (substatement-open . 0)
+              (inline-open . 0)
+              (block-open . -4)
+              (case-label . 2)
+              (label . 2)
+              (statement-case-intro . 2)
+              (statement-case-open . 2)
+              (access-label . -2)
+              (innamespace . 0)))))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(tex-verbatim ((t (:family "inconsolata")))))
