@@ -29,25 +29,27 @@
 (add-to-list 'load-path "~/dotfiles/.elisp/matlab-emacs/matlab-emacs")
 (load-library "matlab-load")
 ;; color-theme stuff - remove this when emacs 24 is available
-(add-to-list 'custom-theme-load-path "~/dotfiles/themes")
-(load-theme 'tangotango t)
+(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
+(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
 ;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
 ;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
 (require 'cc-mode)
-;; (require 'color-theme-tangotango)
-;; (require 'color-theme)
-;; (eval-after-load "color-theme"
-;;   '(progn
-;;      (color-theme-initialize)
-;;      (color-theme-tangotango)))
-;;(load "~/.elisp/icicles-install")
-;;(add-to-list 'load-path "~/dotfiles/.elisp/magit-1.1.1")
-;;(require `magit)
+(require 'color-theme-tangotango)
+(require 'color-theme)
+(eval-after-load "color-theme"
+  '(progn
+     (color-theme-initialize)
+     (color-theme-tangotango)))
+;; (load "~/.elisp/icicles-install")
+;; (add-to-list 'load-path "~/dotfiles/.elisp/magit-1.1.1")
+;; (require `magit)
 (require `edit-server)
 (edit-server-start)
 
 ;;-------------------------------------- Flags
-(set-default-font "Inconsolata-11")
+(set-default-font "Inconsolata-10")
+(add-to-list 'default-frame-alist
+             '(font . "Inconsolata-10"))
 (setq mouse-autoselect-window nil) ;; focus follows mouse off
 (setq sentence-end-double-space nil) ;; sentences end with a single space
 (show-paren-mode t)
@@ -192,6 +194,23 @@
             (setq answer (+ (expt 10 field-width) answer)))
           (replace-match (format (concat "%0" (int-to-string field-width) "d")
                                  answer)))))))
+(defun desktop-load ()
+  "Load the desktop and enable autosaving"
+  (interactive)
+  (let ((desktop-load-locked-desktop "ask"))
+    (desktop-read)
+    (desktop-save-mode 1)))
+
+(defun maybe-fill-paragraph (&optional justify region)
+  "Fill paragraph at or after point (see `fill-paragraph').
+
+Does nothing if `visual-line-mode' is on."
+  (interactive (progn
+    	 (barf-if-buffer-read-only)
+    	 (list (if current-prefix-arg 'full) t)))
+  (or visual-line-mode
+      (fill-paragraph justify region)))
+
 ;;-------------------------------------- Binds
 (global-set-key (kbd "M-g g") `goto-line)
 (global-set-key (kbd "C-S-h") `windmove-left)
@@ -279,6 +298,9 @@
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.cu$". cuda-mode) auto-mode-alist))
 
+;; Trying out speedbar
+;; (when window-system
+;;   (speedbar t))
 ;;-------------------------------------- Enabled Commands
 
 (put 'narrow-to-region 'disabled nil)
@@ -292,7 +314,7 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   )
 
-;;-------------------------------------- Startup
+;;-------------------------------------- Hooks Functions
 (defun se-startup()
   ;; Creates a four panel emacs workspace
   (server-start)
@@ -306,9 +328,14 @@
 ;; (icy-mode 1)
 )
 
+(defun latex-startup()
+  (define-key latex-mode-map "\M-q" 'maybe-fill-paragraph)
+  (visual-line-mode))
+
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
 (add-hook `before-save-hook `delete-trailing-whitespace)
+(add-hook `latex-mode-hook `latex-startup)
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
