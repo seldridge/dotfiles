@@ -14,7 +14,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(display-time-mode 1)
+(display-time-mode -1)
 (setq debug-on-error t)
 (setq inhibit-splash-screen t)
 
@@ -64,7 +64,7 @@
 ;;(set-cursor-color "white")
 (setq-default indent-tabs-mode nil)
 (setq cperl-indent-level 2)
-;(setq-default tab-width 2)
+;; (setq-default tab-width 2)
 ;(setq tramp-default-user "root")
 (setq tramp-auto-save-directory "/tmp")
 (set-fill-column 80)
@@ -297,6 +297,10 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.cu$". cuda-mode) auto-mode-alist))
+;; gem5
+(setq auto-mode-alist (cons '("\\.cc\\.inc$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hh\\.inc$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.isa$". python-mode) auto-mode-alist))
 
 ;; Trying out speedbar
 ;; (when window-system
@@ -336,6 +340,10 @@ Does nothing if `visual-line-mode' is on."
 (add-hook `emacs-startup-hook `se-startup)
 (add-hook `before-save-hook `delete-trailing-whitespace)
 (add-hook `latex-mode-hook `latex-startup)
+(add-hook `python-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 2))))
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
