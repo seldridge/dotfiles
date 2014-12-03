@@ -140,10 +140,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 1 px or 1 ppt
+        bindsym j resize grow height 1 px or 1 ppt
+        bindsym k resize shrink height 1 px or 1 ppt
+        bindsym l resize grow width 1 px or 1 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -162,22 +162,22 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     position top
-    status_command i3status
+    # status_command i3status
     # py3status broke after an update to python. I'm being lazy and
     # not using it for now. If I want to re-enable it, I need to
     # comment the line above and uncomment everything below.
 
-    # status_command py3status --debug -n 1 -c ~/.i3status.conf -i ~/dotfiles/py3status
-    # colors {
-    #        background #000000
-    #        statusline #ffffff
-    #        separator #666666
+    status_command py3status --debug -n 1 -c ~/.i3status.conf -i ~/dotfiles/py3status
+    colors {
+           background #000000
+           statusline #ffffff
+           separator #666666
 
-    #        focused_workspace  #4c7899 #285577 #ffffff
-    #        active_workspace   #333333 #5f676a #ffffff
-    #        inactive_workspace #333333 #222222 #888888
-    #        urgent_workspace   #2f343a #900000 #ffffff
-    # }
+           focused_workspace  #4c7899 #285577 #ffffff
+           active_workspace   #333333 #5f676a #ffffff
+           inactive_workspace #333333 #222222 #888888
+           urgent_workspace   #2f343a #900000 #ffffff
+    }
 }
 
 # Assignments. Format:
@@ -186,6 +186,7 @@ bar {
 #  assign [class="URxvt"] 1
 # See http://i3wm.org/docs/userguide.html#_automatically_putting_clients_on_specific_workspaces
 assign [class="URxvt" instance="urxvt"] $workspace_1
+assign [instance="Emacs_TEXTAREA"] $workspace_2
 assign [class="Emacs"] $workspace_3
 assign [class="Chromium"] $workspace_2
 assign [class="Firefox"] $workspace_2
@@ -209,6 +210,7 @@ for_window [instance="prompt-vpn"] floating enable
 for_window [class=".+"] border 1pixel
 for_window [class="Gtkwave"] floating enable fullscreen
 for_window [class="FTL"] floating enable
+for_window [instance="Emacs_TEXTAREA"] floating enable
 
 bindsym $mod+mod1+v exec urxvt -name prompt-vpn -e vpnc_toggle
 # bindsym $mod+Shift+v exec urxvt -name prompt-vnc -e vncviewer -FullScreen -FullScreenSystemKeys=0 -via schuye@celnode06.bu.edu localhost:02

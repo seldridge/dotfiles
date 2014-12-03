@@ -1,0 +1,20 @@
+#!/bin/sh
+
+TERM_EMULATOR=i3-sensible-terminal
+SLEEP_TIME=0.1
+
+${TERM_EMULATOR} -hold -e top & sleep ${SLEEP_TIME}
+i3-msg split h & sleep ${SLEEP_TIME}
+${TERM_EMULATOR} & sleep ${SLEEP_TIME}
+i3-msg split v & sleep ${SLEEP_TIME}
+${TERM_EMULATOR} & sleep ${SLEEP_TIME}
+i3-msg focus left & sleep ${SLEEP_TIME}
+i3-msg split v & sleep ${SLEEP_TIME}
+${TERM_EMULATOR} & sleep ${SLEEP_TIME}
+i3-msg focus up & sleep ${SLEEP_TIME}
+i3-msg split v & sleep ${SLEEP_TIME}
+${TERM_EMULATOR} -hold -e dmesg -w & sleep ${SLEEP_TIME}
+${TERM_EMULATOR} & sleep ${SLEEP_TIME}
+# i3-msg mode "resize" & sleep ${SLEEP_TIME}
+i3-msg resize shrink height 20px or 20pt & ${SLEEP_TIME}
+# i3-msg mode "default"

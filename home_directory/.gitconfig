@@ -6,3 +6,4 @@
 [alias]
         l = log --pretty=oneline --abbrev-commit --graph
         today = log --pretty=oneline --abbrev-commit --graph --since 3am
+	ll = log --pretty=oneline --abbrev-commit --graph
