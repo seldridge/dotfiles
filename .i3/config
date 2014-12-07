@@ -12,13 +12,13 @@
 set $mod Mod4
 
 # Workspace names
-set $workspace_1 "1: term"
-set $workspace_2 "2: net"
-set $workspace_3 "3: edit"
-set $workspace_4 "4: vnc"
-set $workspace_5 "5: media"
-set $workspace_6 "6: misc"
-set $workspace_7 "7: show"
+set $workspace_1 "1t"
+set $workspace_2 "2n"
+set $workspace_3 "3e"
+set $workspace_4 "4v"
+set $workspace_5 "5m"
+set $workspace_6 "6e"
+set $workspace_7 "7s"
 set $workspace_8 "8"
 set $workspace_9 "9"
 set $workspace_10 "10"
@@ -162,22 +162,23 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     position top
-    # status_command i3status
+    status_command i3status
+
     # py3status broke after an update to python. I'm being lazy and
     # not using it for now. If I want to re-enable it, I need to
     # comment the line above and uncomment everything below.
 
-    status_command py3status --debug -n 1 -c ~/.i3status.conf -i ~/dotfiles/py3status
-    colors {
-           background #000000
-           statusline #ffffff
-           separator #666666
+    # status_command py3status --debug -n 1 -c ~/.i3status.conf -i ~/dotfiles/py3status
+    # colors {
+    #        background #000000
+    #        statusline #ffffff
+    #        separator #666666
 
-           focused_workspace  #4c7899 #285577 #ffffff
-           active_workspace   #333333 #5f676a #ffffff
-           inactive_workspace #333333 #222222 #888888
-           urgent_workspace   #2f343a #900000 #ffffff
-    }
+    #        focused_workspace  #4c7899 #285577 #ffffff
+    #        active_workspace   #333333 #5f676a #ffffff
+    #        inactive_workspace #333333 #222222 #888888
+    #        urgent_workspace   #2f343a #900000 #ffffff
+    # }
 }
 
 # Assignments. Format:
@@ -185,7 +186,7 @@ bar {
 # e.g., to assign all of class URxvt to workspace 1, use:
 #  assign [class="URxvt"] 1
 # See http://i3wm.org/docs/userguide.html#_automatically_putting_clients_on_specific_workspaces
-assign [class="URxvt" instance="urxvt"] $workspace_1
+# assign [class="URxvt" instance="urxvt"] $workspace_1
 assign [instance="Emacs_TEXTAREA"] $workspace_2
 assign [class="Emacs"] $workspace_3
 assign [class="Chromium"] $workspace_2
@@ -202,6 +203,7 @@ assign [class="Okular"] $workspace_5
 assign [class="JabRef"] $workspace_5
 assign [class="XDvi"] $workspace_5
 assign [class="libreoffice"] $workspace_3
+assign [class="Conkeror"] $workspace_2
 for_window [class="python2.7"] fullscreen
 for_window [class="python2.7"] focus
 for_window [class="Vlc"] fullscreen
@@ -226,4 +228,4 @@ bindsym $mod+Shift+v exec urxvt -name prompt-vnc -e ssh schuye@enggrid.bu.edu -L
 bindsym $mod+mod1+l exec i3lock -i ~/wallpaper/wallpaper -t
 bindsym $mod+Shift+mod1+l exec i3lock -i ~/wallpaper/wallpaper -t & systemctl suspend
 
-# bindsym $mod+Shift+Return exec urxvt -name prompt-emacsclient -e emacsclient -nw
+bindsym $mod+Shift+Return exec emacsclient -c
