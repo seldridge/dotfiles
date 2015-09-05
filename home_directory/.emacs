@@ -15,8 +15,13 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (display-time-mode -1)
+(blink-cursor-mode 1)
+(setq blink-cursor-blinks -1)
 (setq debug-on-error t)
 (setq inhibit-splash-screen t)
+
+(setq user-mail-address "schuyler.eldridge@gmail.com")
+(setq user-full-name "Schuyler Eldridge")
 
 ;; generic path defuns - what do these do exactly?
 (defun prepend-path ( my-path )
@@ -45,6 +50,70 @@
 ;; (require `magit)
 (require `edit-server)
 (edit-server-start)
+(add-to-list 'default-frame-alist '(width . 160))
+
+;; BBDB
+;; (require 'bbdb)
+;; (bbdb-initialize 'gnus 'message)
+;; (setq bbdb-user-mail-names
+;;       (regexp-opt '("schuyler.eldridge@gmail.com"
+;;                     "schuye@bu.edu")))
+;; (setq bbdb-complete-name-allow-cycling t)
+;; (setq bbdb-use-pop-up nil)
+
+;; GNUs
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+               (vertical 40
+                         (group 1.0))
+               (vertical 1.0
+                         (summary 0.25 point)
+                         (article 1.0)))))
+(gnus-add-configuration
+ '(summary
+   (horizontal 1.0
+               (vertical 40
+                         (group 1.0))
+               (summary 1.0))))
+
+(gnus-add-configuration
+ '(group
+   (horizontal 1.0
+               (vertical 40
+                         (group 1.0))
+               (vertical 1.0
+                         (summary 0.25 point)
+                         (article 1.0)))))
+
+(gnus-add-configuration
+ '(reply
+   (horizontal 1.0
+               (vertical 40
+                         (group 1.0))
+               (vertical 1.0
+                         (article 0.25 point)
+                         (message 1.0)))))
+
+(defun gnus-demon-scan-news-3 ()
+  (let ((win (current-window-configuration))
+	(gnus-read-active-file 'some)
+	(gnus-check-new-newsgroups nil)
+	(gnus-verbose 2)
+	(gnus-verbose-backends 5)
+	(level 3)
+	)
+    ;; (message "check-mail: %s" (format-time-string "%H:%M:%S"))
+    (while-no-input
+      (unwind-protect
+          (save-window-excursion
+            (when (gnus-alive-p)
+              (with-current-buffer gnus-group-buffer
+                (gnus-group-get-new-news level))))
+        (set-window-configuration win)))))
+
+(setq gnus-demon-timestep 10)
+(gnus-demon-add-handler 'gnus-demon-scan-news-3 12 1)
 
 ;;-------------------------------------- Flags
 (set-default-font "Inconsolata-10")
@@ -227,14 +296,19 @@ Does nothing if `visual-line-mode' is on."
 (global-set-key (kbd "M-s t") `toggle-truncate-lines)
 (global-set-key (kbd "M-s n") `shell-new)
 (global-set-key (kbd "M-s r") `revert-buffer-fast)
-(global-set-key (kbd "M-s ;") `comment-dwim)
 (global-set-key (kbd "M-s c") `compile)
 (global-set-key (kbd "M-s :") `comment-indent)
 ;;(global-set-key (kbd "M-s g") `magit-status)
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+;; Hippie Expand
+(global-set-key (kbd "M-/") `hippie-expand)
+(global-set-key (kbd "M-=") `count-words)
 
 ;;-------------------------------------- Modes
+
+(setq magit-auto-revert-mode nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; syntax highlighting
 (global-font-lock-mode 1)
@@ -257,7 +331,7 @@ Does nothing if `visual-line-mode' is on."
       verilog-auto-endcomments         nil
 ;;      verilog-minimum-comment-distance 40
 ;;      verilog-indent-begin-after-if    t
-      verilog-auto-lineup              'all
+      verilog-auto-lineup              nil
 ;;      verilog-highlight-p1800-keywords nil
 ;;      verilog-linter                   "my_lint_shell_command"
       verilog-auto-delete-trailing-whitespace t
@@ -301,6 +375,8 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("\\.cc\\.inc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.hh\\.inc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.isa$". python-mode) auto-mode-alist))
+;; Github-flavored Markdown
+(setq auto-mode-alist (cons '("\\.md$". gfm-mode) auto-mode-alist))
 
 ;; Trying out speedbar
 ;; (when window-system
@@ -334,12 +410,21 @@ Does nothing if `visual-line-mode' is on."
 
 (defun latex-startup()
   (define-key latex-mode-map "\M-q" 'maybe-fill-paragraph)
+  ;; (define-key latex-mode-map "\M-q" 'fill-paragraph)
+  (visual-line-mode))
+
+;; Currently not working...
+(defun gfm-startup()
+  (local-set-key "\M-q" 'maybe-fill-paragraph)
   (visual-line-mode))
 
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
 (add-hook `before-save-hook `delete-trailing-whitespace)
+;; (remove-hook `before-save-hook `delete-trailing-whitespace)
 (add-hook `latex-mode-hook `latex-startup)
+(add-hook `markdown-mode-hook `gfm-startup)
+(add-hook `gfm-mode-hook `gfm-startup)
 (add-hook `python-mode-hook
           (function (lambda ()
                       (setq indent-tabs-mode nil
@@ -379,9 +464,13 @@ Does nothing if `visual-line-mode' is on."
  '(custom-safe-themes
    (quote
     ("dbf8cb30319aa88d14c569ef4509bd2c9ad6c8c58e7e7a7ae61a872cb32e9de2" "7f329ccc6b229c2172dc540848aa195dd9fbd508bc96618a1ab0b1955dd1a5a7" "40517b254c121bf4d62d1b0a61075959d721f928ed941aa6a3c33a191ebb1490" "64905e72f368db9bbc1fc347e8c3ab016257c4286006be72b9e50db72b3b5164" "e5d899e8ca6ae9014855c533993b0c06095bb7c55a5b0aab8e71a07d94d9e352" default)))
+ '(package-selected-packages
+   (quote
+    (magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
-    ((eval c-add-style "m5"
+    ((eval end-of-buffer)
+     (eval c-add-style "m5"
            (quote
             ((c-basic-offset . 4)
              (indent-tabs-mode)

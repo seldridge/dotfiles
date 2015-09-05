@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -e /var/run/vpnc/pid ]
+if [ ! -e /var/run/vpnc.pid ]
 then
     echo "---------------------------------------- Starting VPNC"
     sudo vpnc bu-offcampus --username schuye

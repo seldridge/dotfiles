@@ -19,7 +19,9 @@ xbindkeys
 
 xset -b
 
-unclutter -idle 1 &
+unclutter --timeout 1 -b
+
+urxvtd -q -f
 
 # i3 configuration
 exec i3

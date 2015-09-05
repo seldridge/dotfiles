@@ -9,16 +9,22 @@
 ! URxvt*scrollstyle:                    mode
 URxvt*scrollBar:                      false
 ! URxvt*scrollBar_right:                boolean
-! URxvt*scrollBar_floating:             boolean
-! URxvt*scrollBar_align:                mode
+! URxvt*scrollBar_floating:             boolean!
+ URxvt*scrollBar_align:                mode
 ! URxvt*thickness:                      number
 ! URxvt*scrollTtyOutput:                boolean
 ! URxvt*scrollTtyKeypress:              boolean
 ! URxvt*scrollWithBuffer:               boolean
 ! URxvt*inheritPixmap:                  boolean
+
+! True transparency (needs compton)
+! URxvt*depth: 32
+! URxvt*background: rgba:0000/0000/0000/e100
+! Fake transparency
 URxvt*transparent:                    true
-! URxvt*tintColor:                      color
 URxvt*shading:                        40
+
+! URxvt*tintColor:                      color
 ! URxvt*blurRadius:                     HxV
 ! URxvt*fading:                         number
 ! URxvt*fadeColor:                      color
@@ -53,6 +59,23 @@ URxvt*background: black
 *color13: #AD7FA8
 *color14: #fcaf3e
 *color15: #EEEEEC
+! Color theme from schemer for current background
+! URxvt*color0: #5e2418
+! URxvt*color1: #8b301b
+! URxvt*color2: #a74427
+! URxvt*color3: #bb5a3a
+! URxvt*color4: #cc724d
+! URxvt*color5: #7d4f2e
+! URxvt*color6: #c59e5d
+! URxvt*color7: #9a6c31
+! URxvt*color8: #9d7f59
+! URxvt*color9: #453828
+! URxvt*color10: #686147
+! URxvt*color11: #a69778
+! URxvt*color12: #7f896e
+! URxvt*color13: #3c5044
+! URxvt*color14: #5e7666
+! URxvt*color15: #629689
 ! URxvt*background:                     color
 ! URxvt*foreground:                     color
 ! URxvt*color0:                         color
@@ -114,7 +137,7 @@ URxvt*font:                           xft:Inconsolata:size=8
 ! URxvt*pointerBlankDelay:              number
 ! URxvt*backspacekey:                   string
 ! URxvt*deletekey:                      string
-! URxvt*print-pipe:                     string
+URxvt*print-pipe:                     "cat > /dev/null"
 ! URxvt*modifier:                       modifier
 ! URxvt*cutchars:                       string
 ! URxvt*answerbackString:               string
@@ -345,7 +368,7 @@ URxvt*font:                           xft:Inconsolata:size=8
 
 ! Save number lines in the scrollback buffer [default 64]. This
 ! resource is limited on most machines to 65535; option -sl.
-! URxvt*saveLines: number
+URxvt*saveLines: 32768
 
 ! Internal border of number pixels. This resource is limited to 100;
 ! option -b.

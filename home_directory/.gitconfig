@@ -7,3 +7,6 @@
         l = log --pretty=oneline --abbrev-commit --graph
         today = log --pretty=oneline --abbrev-commit --graph --since 12am
 	ll = log --pretty=oneline --abbrev-commit --graph
+        new = log --pretty=oneline --abbrev-commit --graph @{u}..HEAD
+[push]
+	default = simple
