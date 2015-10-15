@@ -227,6 +227,10 @@ for_window [instance="Emacs_TEXTAREA"] floating enable
 # Hangouts related
 # for_window [title="Hangouts"] move container to $workspace_7
 # for_window [role="pop-up"] floating enable
+# assign [class="Pdfpc" window_role="presentation"] $workspace_10
+# assign [class="Pdfpc" window_role="presenter"] $workspace_9
+assign [class="Pdfpc" window_role="presentation"] $workspace_10
+assign [class="Pdfpc" window_role="presenter"] $workspace_9
 
 bindsym $mod+mod1+v exec urxvt -name prompt-vpn -e vpnc_toggle
 # bindsym $mod+Shift+v exec urxvt -name prompt-vnc -e vncviewer -FullScreen -FullScreenSystemKeys=0 -via schuye@celnode06.bu.edu localhost:02
