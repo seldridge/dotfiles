@@ -225,7 +225,8 @@ for_window [class=".+"] border 1pixel
 for_window [class="FTL"] floating enable
 for_window [instance="Emacs_TEXTAREA"] floating enable
 # Scratchpad
-for_window [instance="urxvt-scratchpad"] move scratchpad; [instance="urxvt-scratchpad"] scratchpad show; move position 10px 22px; resize grow height 178px; resize grow width 700px; move scratchpad
+# for_window [instance="urxvt-scratchpad"] move scratchpad; [instance="urxvt-scratchpad"] scratchpad show; move position 10px 22px; resize grow height 178px; resize grow width 700px; move scratchpad
+for_window [instance="urxvt-scratchpad"] move scratchpad;
 # Hangouts related
 # for_window [title="Hangouts"] move container to $workspace_7
 # for_window [role="pop-up"] floating enable

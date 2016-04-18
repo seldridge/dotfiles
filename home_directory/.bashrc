@@ -36,8 +36,17 @@ PERL_LOCAL_LIB_ROOT="/home/se/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT
 PERL_MB_OPT="--install_base \"/home/se/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/se/perl5"; export PERL_MM_OPT;
 
+PATH="$PATH:$HOME/node_modules/.bin"; export PATH;
+
 # Research related
 export RISCV=$HOME/research_local/riscv
 export PATH=$PATH:$RISCV/bin
 
 export XILINXD_LICENSE_FILE=2100@XilinxLM.bu.edu
+
+# added by travis gem
+[ -f /home/se/.travis/travis.sh ] && source /home/se/.travis/travis.sh
+
+. /home/se/usr/src/torch/install/bin/torch-activate
+
+stty -ixon

@@ -10,3 +10,5 @@
         new = log --pretty=oneline --abbrev-commit --graph @{u}..HEAD
 [push]
 	default = simple
+[rerere]
+	enabled = false

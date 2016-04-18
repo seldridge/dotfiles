@@ -52,6 +52,11 @@
 (edit-server-start)
 (add-to-list 'default-frame-alist '(width . 160))
 
+;; neo-tree
+(add-to-list 'load-path "/home/se/usr/src/emacs-neotree")
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
 ;; BBDB
 ;; (require 'bbdb)
 ;; (bbdb-initialize 'gnus 'message)
@@ -302,8 +307,10 @@ Does nothing if `visual-line-mode' is on."
 ;; mode specific bindings
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 ;; Hippie Expand
-(global-set-key (kbd "M-/") `hippie-expand)
+;; (global-set-key (kbd "M-/") `hippie-expand)
 (global-set-key (kbd "M-=") `count-words)
+;; Company Mode
+(global-set-key (kbd "M-/") 'company-complete)
 
 ;;-------------------------------------- Modes
 
@@ -377,10 +384,17 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("\\.isa$". python-mode) auto-mode-alist))
 ;; Github-flavored Markdown
 (setq auto-mode-alist (cons '("\\.md$". gfm-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("Makefrag". makefile-mode) auto-mode-alist))
+;; RISC-V related
+(setq auto-mode-alist (cons '("\\.rvS". asm-mode) auto-mode-alist))
 
 ;; Trying out speedbar
 ;; (when window-system
 ;;   (speedbar t))
+
+;; company mode
+(setq company-idle-delay 0.5)
+
 ;;-------------------------------------- Enabled Commands
 
 (put 'narrow-to-region 'disabled nil)
@@ -429,6 +443,8 @@ Does nothing if `visual-line-mode' is on."
           (function (lambda ()
                       (setq indent-tabs-mode nil
                             tab-width 2))))
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;;-------------------------------------- Test Area
  ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
