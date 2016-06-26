@@ -1,0 +1,30 @@
+# This needs to things to be configured to work:
+# * $INTERFACE: Your wireless interface, e.g., wlp2s0
+# * $BU_USERNAME: This is your BU username
+# * $NTHASH_KERBEROS_PASSWORD: This is the NT Hash of your BU Kerberos
+#   password. You can get this by installing the `freeradius` package
+#   to give you a program called `smbencrypt`:
+#
+#     smbencrypt MyKerberosPasswordInClearText
+#     > smbencrypt MyKerberosPasswordInCleartext
+#       LM Hash			 	NT Hash
+#       --------------------------------	--------------------------------
+#       85A5B9A9C26CBE9ED9E9F2BB3002A156	F57A278D8667DAE4F61A09C601C9BA9D
+#
+#   You then put the NT Hash (F57A...) into the
+#   $NTHASH_KERBEROS_PASSWORD field
+#
+Description='Configuration for BU's 802.1x network'
+Interface=$INTERFACE
+Connection=wireless
+Security=wpa-configsection
+IP=dhcp
+WPAConfigSection=(
+    'ssid="BU (802.1x)"'
+    'key_mgmt=WPA-EAP'
+    'eap=TTLS PEAP MSCHAPV2'
+    'pairwise=TKIP CCMP'
+    'identity="$BU_USERNAME"'
+    'password=hash:$NTHASH_KERBEROS_PASSWORD'
+    'phase2="auth=MSCHAPV2"'
+)
