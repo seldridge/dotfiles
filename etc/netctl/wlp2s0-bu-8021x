@@ -5,7 +5,6 @@
 #   password. You can get this by installing the `freeradius` package
 #   to give you a program called `smbencrypt`:
 #
-#     smbencrypt MyKerberosPasswordInClearText
 #     > smbencrypt MyKerberosPasswordInCleartext
 #       LM Hash			 	NT Hash
 #       --------------------------------	--------------------------------
