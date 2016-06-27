@@ -1,4 +1,4 @@
-# This needs to things to be configured to work:
+# This needs three things to be configured to work:
 # * $INTERFACE: Your wireless interface, e.g., wlp2s0
 # * $BU_USERNAME: This is your BU username
 # * $NTHASH_KERBEROS_PASSWORD: This is the NT Hash of your BU Kerberos
