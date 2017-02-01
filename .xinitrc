@@ -4,22 +4,22 @@
 # xcompmgr -c -f -D 5 &
 # exec /usr/bin/ratpoison
 
-WALLPAPER=~/wallpaper/wallpaper-54773.png
+# WALLPAPER=$HOME/wallpaper/wallpaper-54773.png
 
 # reread .Xresource
-xrdb ~/.Xresources
+xrdb $HOME/.Xresources
 
 # set the background
-rm -f ~/wallpaper/wallpaper
-ln -s $WALLPAPER ~/wallpaper/wallpaper
-feh --bg-fill $WALLPAPER
+# rm -f ~/wallpaper/wallpaper
+# ln -s $WALLPAPER ~/wallpaper/wallpaper
+# feh --bg-fill $WALLPAPER
 
 # start xbindkeys
 xbindkeys
 
 xset -b
 
-unclutter --timeout 1 -b
+# unclutter --timeout 1 -b
 
 urxvtd -q -f
 

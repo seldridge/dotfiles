@@ -37,7 +37,7 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -172,22 +172,6 @@ bindsym $mod+r mode "resize"
 bar {
     position top
     status_command i3status
-
-    # py3status broke after an update to python. I'm being lazy and
-    # not using it for now. If I want to re-enable it, I need to
-    # comment the line above and uncomment everything below.
-
-    # status_command py3status --debug -n 1 -c ~/.i3status.conf -i ~/dotfiles/py3status
-    # colors {
-    #        background #000000
-    #        statusline #ffffff
-    #        separator #666666
-
-    #        focused_workspace  #4c7899 #285577 #ffffff
-    #        active_workspace   #333333 #5f676a #ffffff
-    #        inactive_workspace #333333 #222222 #888888
-    #        urgent_workspace   #2f343a #900000 #ffffff
-    # }
 }
 
 # Assignments. Format:

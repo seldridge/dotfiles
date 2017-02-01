@@ -29,15 +29,10 @@
 (defun append-path ( my-path )
   (setq load-path (append load-path (list (expand-file-name my-path)))))
 ;; Look first in the directory ~/.elisp for elisp files
-(prepend-path "~/dotfiles/.elisp/")
-;; load matlab mode
-(add-to-list 'load-path "~/dotfiles/.elisp/matlab-emacs/matlab-emacs")
-(load-library "matlab-load")
+(prepend-path "~/.elisp/")
 ;; color-theme stuff - remove this when emacs 24 is available
-(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
-(add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
-;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0")
-;; (add-to-list 'load-path "~/dotfiles/.elisp/color-theme-6.6.0/color-theme-tangotango")
+(add-to-list 'load-path "~/.elisp/color-theme-6.6.0")
+(add-to-list 'load-path "~/.elisp/color-theme-6.6.0/color-theme-tangotango")
 (require 'cc-mode)
 (require 'color-theme-tangotango)
 (require 'color-theme)
@@ -46,11 +41,19 @@
      (color-theme-initialize)
      (color-theme-tangotango)))
 ;; (load "~/.elisp/icicles-install")
-;; (add-to-list 'load-path "~/dotfiles/.elisp/magit-1.1.1")
+;; (add-to-list 'load-path "~/.elisp/magit-1.1.1")
 ;; (require `magit)
 (require `edit-server)
 (edit-server-start)
 (add-to-list 'default-frame-alist '(width . 160))
+
+;; packages
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+(unless (package-installed-p 'scala-mode)
+  (package-refresh-contents) (package-install 'scala-mode))
 
 ;; neo-tree
 (add-to-list 'load-path "/home/se/usr/src/emacs-neotree")
@@ -121,9 +124,9 @@
 (gnus-demon-add-handler 'gnus-demon-scan-news-3 12 1)
 
 ;;-------------------------------------- Flags
-(set-default-font "Inconsolata-10")
+(set-default-font "Inconsolata-8")
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-10"))
+             '(font . "Inconsolata-8"))
 (setq mouse-autoselect-window nil) ;; focus follows mouse off
 (setq sentence-end-double-space nil) ;; sentences end with a single space
 (show-paren-mode t)
@@ -146,7 +149,7 @@
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 (setq visible-bell t)
 (setq compilation-scroll-output t)
-(set-default-font "Inconsolata 11")
+(set-default-font "Inconsolata 8")
 (setq comment-column 40)
 
 ;;-------------------------------------- Functions
@@ -353,17 +356,9 @@ Does nothing if `visual-line-mode' is on."
 ;;      matlab-auto-fill    )
 
 ;; icicles
-;; (add-to-list 'load-path "~/dotfiles/.elisp/icicles")
+;; (add-to-list 'load-path "~/.elisp/icicles")
 ;; (require 'ring+)
 ;; (require 'icicles)
-
-;; packages
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
-(unless (package-installed-p 'scala-mode2)
-  (package-refresh-contents) (package-install 'scala-mode2))
 
 ;; mode by file extension
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
