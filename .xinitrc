@@ -21,7 +21,17 @@ xset -b
 
 # unclutter --timeout 1 -b
 
-urxvtd -q -f
+urxvtd -q -o -f
+
+# Try using gnome-keyring
+dbus-update-activation-environment --systemd DISPLAY
+# eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+# echo $SSH_AUTH_SOCK
+# export SSH_AUTH_SOCK
+
+# Possibly needed to get dunst working
+eval $(dbus-launch --sh-syntax --exit-with-session)
 
 # i3 configuration
+export TERMINAL=urxvtc
 exec i3

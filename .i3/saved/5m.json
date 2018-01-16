@@ -1,0 +1,92 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1032,
+       "width": 954,
+       "x": 0,
+       "y": 19
+    },
+    "name": "IBM Sametime Connect - schuyler.eldridge@ibm.com ",
+    "percent": 0.33,
+    "swallows": [
+       {
+       "class": "^Sametime$"
+       // "instance": "^Sametime$",
+       // "title": "^IBM\\ Sametime\\ Connect\\ \\-\\ schuyler\\.eldridge\\@ibm\\.com\\ $",
+       // "transient_for": "^$"
+       }
+    ],
+    "type": "con"
+}
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1032,
+       "width": 954,
+       "x": 0,
+       "y": 19
+    },
+    "name": "IBM Sametime Connect - schuyler.eldridge@ibm.com ",
+    "percent": 0.33,
+    "swallows": [
+       {
+       "class": "^Sametime$"
+       // "instance": "^Sametime$",
+       // "title": "^IBM\\ Sametime\\ Connect\\ \\-\\ schuyler\\.eldridge\\@ibm\\.com\\ $",
+       // "transient_for": "^$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1059,
+       "width": 1438,
+       "x": 481,
+       "y": 20
+    },
+    "name": "Slack - IBM Research",
+    "percent": 0.67,
+    "swallows": [
+       {
+       "class": "^Slack$"
+       // "instance": "^slack$",
+       // "title": "^Slack\\ \\-\\ IBM\\ Research$",
+       // "transient_for": "^$",
+       // "window_role": "^browser\\-window$"
+       }
+    ],
+    "type": "con"
+}
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1059,
+       "width": 1438,
+       "x": 481,
+       "y": 20
+    },
+    "name": "Slack - IBM Research",
+    "percent": 0.67,
+    "swallows": [
+       {
+       "class": "^Slack$"
+       // "instance": "^slack$",
+       // "title": "^Slack\\ \\-\\ IBM\\ Research$",
+       // "transient_for": "^$",
+       // "window_role": "^browser\\-window$"
+       }
+    ],
+    "type": "con"
+}
