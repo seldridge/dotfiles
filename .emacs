@@ -7,69 +7,48 @@
 ;; 0) Cleanup
 ;; 1) Custom shell creation stuff
 ;; 2) Colors [DONE?]
-;; 3) Fix how prepend-path is handled - what?
 ;; 4) Add rainbow-delimiters.el?
 ;;--------------------------------------
 
+;;-------------------------------------- Flags
+(show-paren-mode t)
+(auto-compression-mode 1)
+(set-fill-column 80)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (display-time-mode -1)
 (blink-cursor-mode 1)
+
+
+(set-default-font "Inconsolata-10")
+(add-to-list 'default-frame-alist
+             '(font . "Inconsolata-10"))
+(setq mouse-autoselect-window nil) ;; focus follows mouse off
+(setq sentence-end-double-space nil) ;; sentences end with a single space
+(setq show-paren-delay 0)
+(setq show-paren-style (quote parenthesis))
+(setq truncate-partial-width-windows nil)
+(setq-default indent-tabs-mode nil)
+(setq cperl-indent-level 2)
+(setq-default tab-width 2)
+(setq tramp-auto-save-directory "/tmp")
+(setq column-number-mode t)
+(setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
+(setq visible-bell t)
+(setq compilation-scroll-output t)
+(set-default-font "Inconsolata 10")
+(setq comment-column 40)
 (setq blink-cursor-blinks -1)
 (setq debug-on-error t)
 (setq inhibit-splash-screen t)
-
 (setq user-mail-address "schuyler.eldridge@gmail.com")
 (setq user-full-name "Schuyler Eldridge")
 
-;; generic path defuns - what do these do exactly?
-(defun prepend-path ( my-path )
-  (setq load-path (cons (expand-file-name my-path) load-path)))
-(defun append-path ( my-path )
-  (setq load-path (append load-path (list (expand-file-name my-path)))))
-;; Look first in the directory ~/.elisp for elisp files
-(prepend-path "~/.elisp/")
-;; color-theme stuff - remove this when emacs 24 is available
-(add-to-list 'load-path "~/.elisp/color-theme-6.6.0")
-(add-to-list 'load-path "~/.elisp/color-theme-6.6.0/color-theme-tangotango")
+;;-------------------------------------- Require
 (require 'cc-mode)
-(require 'color-theme-tangotango)
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-tangotango)))
-;; (load "~/.elisp/icicles-install")
-;; (add-to-list 'load-path "~/.elisp/magit-1.1.1")
-;; (require `magit)
-(require `edit-server)
-(edit-server-start)
-(add-to-list 'default-frame-alist '(width . 160))
 
-;; packages
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
-(unless (package-installed-p 'scala-mode)
-  (package-refresh-contents) (package-install 'scala-mode))
-
-;; neo-tree
-(add-to-list 'load-path "/home/se/usr/src/emacs-neotree")
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-
-;; BBDB
-;; (require 'bbdb)
-;; (bbdb-initialize 'gnus 'message)
-;; (setq bbdb-user-mail-names
-;;       (regexp-opt '("schuyler.eldridge@gmail.com"
-;;                     "schuye@bu.edu")))
-;; (setq bbdb-complete-name-allow-cycling t)
-;; (setq bbdb-use-pop-up nil)
-
-;; GNUs
+;;-------------------------------------- GNUs
 (gnus-add-configuration
  '(article
    (horizontal 1.0
@@ -123,35 +102,6 @@
 (setq gnus-demon-timestep 10)
 (gnus-demon-add-handler 'gnus-demon-scan-news-3 12 1)
 
-;;-------------------------------------- Flags
-(set-default-font "Inconsolata-8")
-(add-to-list 'default-frame-alist
-             '(font . "Inconsolata-8"))
-(setq mouse-autoselect-window nil) ;; focus follows mouse off
-(setq sentence-end-double-space nil) ;; sentences end with a single space
-(show-paren-mode t)
-(setq show-paren-delay 0)
-(setq show-paren-style (quote parenthesis))
-(auto-compression-mode 1)
-;(setq explicit-shell-file-name t)
-;(setq explicit-shell-args '("--login" "-i"))
-(setq truncate-partial-width-windows nil)
-;;(set-background-color "black")
-;;(set-foreground-color "white")
-;;(set-cursor-color "white")
-(setq-default indent-tabs-mode nil)
-(setq cperl-indent-level 2)
-;; (setq-default tab-width 2)
-;(setq tramp-default-user "root")
-(setq tramp-auto-save-directory "/tmp")
-(set-fill-column 80)
-(setq column-number-mode t)
-(setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
-(setq visible-bell t)
-(setq compilation-scroll-output t)
-(set-default-font "Inconsolata 8")
-(setq comment-column 40)
-
 ;;-------------------------------------- Functions
 
 ;; safety net
@@ -181,25 +131,17 @@
   (shell (concat "$" buffer)))
 ;;(shell "*shell*<%s>" `shell-name))
 
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 (setq comint-buffer-maximum-size 9999)
 (add-hook 'comint-output-filter-functions
           'comint-truncate-buffer)
 
 (add-hook 'text-mode-hook 'flyspell-mode)
-
-;; run cygwin shell
-(defun cygwin-shell ()
-  "Run cygwin bash in shell mode."
-  (interactive)
-  (let ((explicit-shell-file-name "C:/cygwin/bin/bash"))
-    (call-interactively 'shell)))
-;; Attempts to get cygwin ssh to work through emacs shell
-;;(require 'tramp)
-;;(setq tramp-default-method "ssh")
-;;(nconc (cadr (assq 'tramp-login-args (assoc "ssh" tramp-methods)))
-;;       '(("bash" "-i")))
-;;(setcdr (assq 'tramp-remote-sh (assoc "ssh" tramp-methods))
-;;      '("bash -i"))
 
 (defun my-filter (condp lst)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
@@ -225,6 +167,7 @@
               (generate-new-buffer-name "*shell*")
             next-shell-buffer))
     (shell buffer)))
+
 ;; count words in the region
 (defun count-words-region (start end)
   (interactive "r")
@@ -349,18 +292,8 @@ Does nothing if `visual-line-mode' is on."
       verilog-company "Boston University"
         )
 
-;; matlab mode
-;;(setq matlab-indent-level 2
-;;      matlab-cont-level   2)
-;;      matlab-case-level  '(1.1))
-;;      matlab-auto-fill    )
-
-;; icicles
-;; (add-to-list 'load-path "~/.elisp/icicles")
-;; (require 'ring+)
-;; (require 'icicles)
-
-;; mode by file extension
+;;-------------------------------------- File Extensions
+;; miscellaneous
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.h++$". c++-mode) auto-mode-alist))
@@ -382,10 +315,8 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("Makefrag". makefile-mode) auto-mode-alist))
 ;; RISC-V related
 (setq auto-mode-alist (cons '("\\.rvS". asm-mode) auto-mode-alist))
-
-;; Trying out speedbar
-;; (when window-system
-;;   (speedbar t))
+;; LaTeX
+(setq auto-mode-alist (cons '("\\.tex". latex-mode) auto-mode-alist))
 
 ;; company mode
 (setq company-idle-delay 0.5)
@@ -399,22 +330,30 @@ Does nothing if `visual-line-mode' is on."
 ;;-------------------------------------- Packages
 (when (>= emacs-major-version 24)
   (require 'package)
+  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                      (not (gnutls-available-p))))
+         (proto (if no-ssl "http" "https")))
+    ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+    (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+    ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+    (when (< emacs-major-version 24)
+      ;; For important compatibility libraries like cl-lib
+      (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
   (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   )
 
-;;-------------------------------------- Hooks Functions
+(require 'magit)
+
+;;-------------------------------------- Theme
+(load-theme 'tangotango t)
+
+;;-------------------------------------- Hooks
 (defun se-startup()
   ;; Creates a four panel emacs workspace
   (server-start)
   (split-window-horizontally)
-  (split-window-vertically)
-  (other-window 1)
-  (other-window 1)
-  (split-window-vertically)
-  (other-window 1)
-  (other-window 1)
-;; (icy-mode 1)
+  (split-window-horizontally)
+  (balance-windows)
 )
 
 (defun latex-startup()
@@ -441,31 +380,6 @@ Does nothing if `visual-line-mode' is on."
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'after-init-hook 'global-company-mode)
 
-;;-------------------------------------- Test Area
- ;; Sets your shell to use cygwin's bash, if Emacs finds it's running
-  ;; under Windows and c:\cygwin exists. Assumes that C:\cygwin\bin is
-  ;; not already in your Windows Path (it generally should not be).
-  ;;
-  (let* ((cygwin-root "c:/cygwin")
-         (cygwin-bin (concat cygwin-root "/bin")))
-    (when (and (eq 'windows-nt system-type)
-             (file-readable-p cygwin-root))
-
-      (setq exec-path (cons cygwin-bin exec-path))
-      (setenv "PATH" (concat cygwin-bin ";" (getenv "PATH")))
-
-      ;; By default use the Windows HOME.
-      ;; Otherwise, uncomment below to set a HOME
-      ;;      (setenv "HOME" (concat cygwin-root "/home/eric"))
-
-      ;; NT-emacs assumes a Windows shell. Change to baash.
-      (setq shell-file-name "bash")
-      (setenv "SHELL" shell-file-name)
-      (setq explicit-shell-file-name shell-file-name)
-
-      ;; This removes unsightly ^M characters that would otherwise
-      ;; appear in the output of java applications.
-      (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -474,10 +388,10 @@ Does nothing if `visual-line-mode' is on."
  '(any-variable EXPR)
  '(custom-safe-themes
    (quote
-    ("dbf8cb30319aa88d14c569ef4509bd2c9ad6c8c58e7e7a7ae61a872cb32e9de2" "7f329ccc6b229c2172dc540848aa195dd9fbd508bc96618a1ab0b1955dd1a5a7" "40517b254c121bf4d62d1b0a61075959d721f928ed941aa6a3c33a191ebb1490" "64905e72f368db9bbc1fc347e8c3ab016257c4286006be72b9e50db72b3b5164" "e5d899e8ca6ae9014855c533993b0c06095bb7c55a5b0aab8e71a07d94d9e352" default)))
+    ("4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(package-selected-packages
    (quote
-    (magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
+    (tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
     ((eval end-of-buffer)
