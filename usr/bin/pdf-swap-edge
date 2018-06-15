@@ -1,0 +1,4 @@
+#!/bin/bash
+
+basename=${1%%.*}
+pdftk A=$basename.pdf shuffle AoddNorth AevenSouth output $basename-swapped.pdf
