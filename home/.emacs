@@ -54,7 +54,7 @@
    (horizontal 1.0
                (vertical 40
                          (group 1.0))
-               (vertical 1.0
+ (vertical 1.0
                          (summary 0.25 point)
                          (article 1.0)))))
 (gnus-add-configuration
@@ -260,8 +260,8 @@ Does nothing if `visual-line-mode' is on."
 
 ;;-------------------------------------- Modes
 
-(setq magit-auto-revert-mode nil)
-(setq magit-last-seen-setup-instructions "1.4.0")
+;; (setq magit-auto-revert-mode nil)
+;; (setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; syntax highlighting
 (global-font-lock-mode 1)
@@ -342,10 +342,10 @@ Does nothing if `visual-line-mode' is on."
   (package-initialize)
   )
 
-(require 'magit)
+;; (require 'magit)
 
 ;;-------------------------------------- Theme
-(load-theme 'tangotango t)
+;; (load-theme 'tangotango t)
 
 ;;-------------------------------------- Hooks
 (defun se-startup()
@@ -378,7 +378,7 @@ Does nothing if `visual-line-mode' is on."
                       (setq indent-tabs-mode nil
                             tab-width 2))))
 (add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -388,10 +388,10 @@ Does nothing if `visual-line-mode' is on."
  '(any-variable EXPR)
  '(custom-safe-themes
    (quote
-    ("4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
+    ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(package-selected-packages
    (quote
-    (tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
+    (markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
     ((eval end-of-buffer)
