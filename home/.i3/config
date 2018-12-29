@@ -186,9 +186,6 @@ assign [class="Emacs"] $workspace_3
 assign [class="Chromium"] $workspace_2
 assign [class="google-chrome"] $workspace_2
 assign [class="Firefox"] $workspace_2
-assign [class="Vncviewer"] $workspace_4
-assign [instance="^prompt-vnc$"] $workspace_4
-assign [instance="rdesktop"] $workspace_4
 assign [class="Vlc"] $workspace_5
 assign [class="python2.7"] $workspace_7
 assign [class="Steam"] $workspace_6
@@ -200,6 +197,9 @@ assign [class="XDvi"] $workspace_5
 assign [class="libreoffice"] $workspace_3
 assign [class="Conkeror"] $workspace_2
 assign [class="Gtkwave"] $workspace_8
+assign [class="Vncviewer"] $workspace_10
+assign [instance="^prompt-vnc$"] $workspace_10
+assign [instance="rdesktop"] $workspace_10
 for_window [class="python2.7"] fullscreen
 for_window [class="python2.7"] focus
 for_window [class="Vlc"] fullscreen
@@ -209,6 +209,7 @@ for_window [class=".+"] border 1pixel
 # for_window [class="Gtkwave"] floating enable fullscreen
 for_window [class="FTL"] floating enable
 for_window [instance="Emacs_TEXTAREA"] floating enable
+for_window [class="feh"] floating enable
 # Scratchpad
 # for_window [instance="urxvt-scratchpad"] move scratchpad; [instance="urxvt-scratchpad"] scratchpad show; move position 10px 22px; resize grow height 178px; resize grow width 700px; move scratchpad
 for_window [instance="urxvt-scratchpad"] move scratchpad;

@@ -15,7 +15,7 @@ urxvtc -name 1t-2 -cd ~ &
 
 # 2n
 i3-msg "workspace 2n; append_layout ~/.i3/saved/2n.json"
-chromium-browser &
+google-chrome &
 
 # 3e
 i3-msg "workspace 3e; append_layout ~/.i3/saved/3e.json"
@@ -29,3 +29,6 @@ sametime-connect &
 # 8
 i3-msg "workspace 8; append_layout ~/.i3/saved/8.json"
 urxvtc -name weechat -e weechat &
+
+# misc
+nm-applet &

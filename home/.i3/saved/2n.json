@@ -13,10 +13,10 @@
     "percent": 0.62,
     "swallows": [
        {
-       "class": "^Chromium\\-browser$",
-       "instance": "^chromium\\-browser$"
+       // "class": "^Google\\-chrome$",
+       // "instance": "^google\\-chrome$"
        // "transient_for": "^$",
-       // "window_role": "^browser$"
+       "window_role": "^browser$"
        }
     ],
     "type": "con"
@@ -32,7 +32,7 @@
        "x": 1230,
        "y": 20
     },
-    "name": "Google Hangouts - schuyler.eldridge@gmail.com",
+    "name": "Google Hangouts",
     "percent": 0.38,
     "swallows": [
        {
