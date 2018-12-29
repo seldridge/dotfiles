@@ -12,7 +12,7 @@ Config {
     -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%cpu% | %memory% | %disku% | %enp37s0% }{ %RJTT% | %date%"
+  , template = "%UnsafeStdinReader% }{ %cpu% | %memory% | %disku% | %swap% | E:%enp0s31f6% | W:%wlp4s0wi% | %battery% | %uptime% | %date%"
 
     -- general behavior
   , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -42,8 +42,17 @@ Config {
       [ Run UnsafeStdinReader
 
         -- network activity monitor (dynamic interface resolution)
-      , Run Network "enp37s0"
+      , Run Network "enp0s31f6"
         [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
+        , "--Low"      , "1000"       -- units: B/s
+        , "--High"     , "5000"       -- units: B/s
+        , "--low"      , "darkgreen"
+        , "--normal"   , "darkorange"
+        , "--high"     , "darkred" ]
+        60
+
+      , Run Wireless "wlp4s0"
+        [ "--template" , "<essid>: <quality>"
         , "--Low"      , "1000"       -- units: B/s
         , "--High"     , "5000"       -- units: B/s
         , "--low"      , "darkgreen"
@@ -58,6 +67,10 @@ Config {
         , ("/tmp", "/tmp:<usedp>%,")
         , ("/mnt/raid", "/mnt/raid:<usedp>%")]
         ["-L", "20", "-H", "50", "-m", "1", "-p", "2"]
+        20
+
+      , Run Swap
+        [ "--template", "swap:<usedratio>%" ]
         20
 
         -- cpu activity monitor
@@ -116,5 +129,17 @@ Config {
         [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
         , ("us"         , "<fc=#8B0000>US</fc>")
         ]
+
+      , Run BatteryP ["BAT0", "BAT1"]
+        ["-t", "<acstatus>:<watts> (<left>%, <timeleft>hr)",
+          "-L", "10", "-H", "80", "-p", "2",
+          "--", "-O", "<fc=green>On</fc> - ", "-i", "",
+          "-L", "-15", "-H", "-5",
+          "-l", "red", "-m", "blue", "-h", "green"] 600
+
+      , Run Uptime
+        [ ]
+        60
+
       ]
   }
