@@ -116,6 +116,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Automatic xrandr handling
     , ((modm, xK_F11), spawn "xrandr_dwim")
+
+    -- Screen locking
+    , ((modm .|. mod1Mask, xK_l),               spawn "xautolock -locknow")
+    , ((modm .|. mod1Mask .|. shiftMask, xK_l), spawn "ssh-kill & xautolock -locknow & systemctl suspend")
+
     ]
     ++
 
