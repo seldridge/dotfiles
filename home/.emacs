@@ -44,6 +44,8 @@
 (setq inhibit-splash-screen t)
 (setq user-mail-address "schuyler.eldridge@gmail.com")
 (setq user-full-name "Schuyler Eldridge")
+(setq sh-basic-offset 2)
+(setq sh-indentation 2)
 
 ;;-------------------------------------- Require
 (require 'cc-mode)
@@ -342,10 +344,10 @@ Does nothing if `visual-line-mode' is on."
   (package-initialize)
   )
 
-;; (require 'magit)
+(require 'magit)
 
 ;;-------------------------------------- Theme
-;; (load-theme 'tangotango t)
+(load-theme 'tangotango t)
 
 ;;-------------------------------------- Hooks
 (defun se-startup()
@@ -391,7 +393,7 @@ Does nothing if `visual-line-mode' is on."
     ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(package-selected-packages
    (quote
-    (markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
+    (haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
     ((eval end-of-buffer)

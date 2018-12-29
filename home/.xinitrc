@@ -15,5 +15,5 @@ xset -b
 urxvtd -q -o -f
 
 export TERMINAL=urxvtc
-exec i3
-# exec xmonad
+# exec i3
+exec xmonad
