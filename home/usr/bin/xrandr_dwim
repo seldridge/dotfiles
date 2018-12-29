@@ -6,15 +6,20 @@
 # strangely not always VGA1 and LVDS1 (I've seem them jump to VGA2,
 # LVDS2). I consequently have to figure out what their actual names
 # are before I can act on them.
-MAIN=$(xrandr | grep "LVDS" | sed -e "s/\([0-9]\+:\)\?\(LVDS[0-9]\+\) \(dis\)\?connected.*/\2/")
-SECONDARY=$(xrandr | grep "VGA" | sed -e "s/\([0-9]\+:\)\?\(VGA[0-9]\+\) \(dis\)\?connected.*/\2/")
+WIDTH=$(xrandr | grep "Screen" | awk '{print $8}')
+MAIN=$(xrandr | grep "eDP" | sed -e "s/\([0-9]\+:\)\?\(eDP[0-9]\+\) \(dis\)\?connected.*/\2/")
+SECONDARY=$(xrandr | grep "HDMI2" | sed -e "s/\([0-9]\+:\)\?\(HDMI[0-9]\+\) \(dis\)\?connected.*/\2/")
 
 echo main:      $MAIN
 echo secondary: $SECONDARY
 
 xrandr --output $SECONDARY --off
 if (xrandr | grep "$SECONDARY connected" >> /dev/null); then
-    xrandr --output $MAIN --auto --primary --output $SECONDARY --auto --right-of $MAIN
+    if [ $WIDTH = 1920 ]; then
+        xrandr --output $MAIN --auto --primary --output $SECONDARY --auto --right-of $MAIN
+    else
+        xrandr --output $MAIN --auto --primary --output $SECONDARY --auto
+    fi
 else
     xrandr --output $MAIN --auto --output $SECONDARY --off
 fi
