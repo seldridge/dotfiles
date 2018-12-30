@@ -1,12 +1,13 @@
+-- -*- mode: haskell; -*-
 Config {
 
   -- appearance
-  font =         "xft:IBM Plex Mono:size=9"
-  , bgColor =      "black"
-  , fgColor =      "#646464"
-  , position =     Top
-  , border =       BottomB
-  , borderColor =  "#646464"
+  font =          "xft:IBM Plex Mono:size=9"
+  , bgColor =     "black"
+  , fgColor =     "#bdbdbd"
+  , position =    Top
+  , border =      BottomB
+  , borderColor = "#de2d26"
 
     -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
@@ -38,10 +39,7 @@ Config {
   , commands =
 
       -- weather monitor
-      [ Run Weather "RJTT"
-        [ "--template"
-        , "<skyCondition> | <fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa" ]
-        36000
+      [ Run UnsafeStdinReader
 
         -- network activity monitor (dynamic interface resolution)
       , Run Network "enp37s0"

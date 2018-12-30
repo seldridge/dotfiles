@@ -3,7 +3,11 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.Scratchpad
 import XMonad.Util.Run
+import XMonad.Util.Dmenu
+
 import System.Exit
+
+import Control.Monad
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -18,31 +22,31 @@ myBar = "xmobar"
 myTerminal = "urxvtc"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
+myPP = xmobarPP { ppCurrent = xmobarColor "#74c476" "" . wrap "[" "]"
+                , ppVisible = id
+                , ppHidden = id
+                , ppHiddenNoWindows = id
+                }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
--- Window management hook
+-- Setup
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
   where
-    h = 0.9 -- terminal height
-    w = 1   -- terminal width
-    t = 0   -- distance from top edge
-    l = 0   -- distance from left edge
+    h = 0.95        -- terminal height
+    w = 0.95        -- terminal width
+    t = (1 - h) / 2 -- distance from top edge
+    l = (1 - w) / 2 -- distance from left edge
 
-xmobarEscape = concatMap doubleLts
-  where doubleLts '<' = "<<"
-        doubleLts x   = [x]
 
-myWorkspaces :: [String]
-myWorkspaces = clickable . (map xmobarEscape) $ ["1","2","3","4","5"]
-
-  where
-         clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                             (i,ws) <- zip [1..5] l,
-                            let n = i ]
+-- Utility to give a user a yes/no prompt via dmenu to confirm that
+-- they want to execute some action
+confirm :: String -> X () -> X ()
+confirm m f = do
+  result <- dmenu [m, "yes", "no"]
+  when (result == "yes") f
 
 -- Key Bindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -102,7 +106,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_q     ), confirm "Do you really want to exit?" (io (exitWith ExitSuccess)))
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
@@ -141,4 +145,5 @@ myConfig = defaultConfig
   , terminal = myTerminal
   , keys = myKeys
   , manageHook = manageScratchPad
+  , logHook = dynamicLogString myPP >>= xmonadPropLog
   }
