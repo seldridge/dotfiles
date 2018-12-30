@@ -1,3 +1,8 @@
+# Exit quickly if this is a non-interactive shell
+if [ -z "$PS1" ]; then
+  return
+fi
+
 # Load git-prompt if found
 F_git_prompt=1
 if [ -f /usr/share/git/git-prompt.sh ]; then
