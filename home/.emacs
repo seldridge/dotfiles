@@ -393,7 +393,7 @@ Does nothing if `visual-line-mode' is on."
     ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(package-selected-packages
    (quote
-    (haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
+    (google-c-style haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
     ((eval end-of-buffer)
@@ -410,7 +410,9 @@ Does nothing if `visual-line-mode' is on."
               (statement-case-intro . 2)
               (statement-case-open . 2)
               (access-label . -2)
-              (innamespace . 0)))))))))
+              (innamespace . 0))))))))
+ '(scala-indent:align-forms t)
+ '(scala-indent:align-parameters t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
