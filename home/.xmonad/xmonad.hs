@@ -112,7 +112,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- Scratchpad
-    , ((modm, xK_F12), scratchpadSpawnActionTerminal myTerminal)
+    , ((modm, xK_grave), scratchpadSpawnActionTerminal myTerminal)
 
     -- Automatic xrandr handling
     , ((modm, xK_F11), spawn "xrandr_dwim")

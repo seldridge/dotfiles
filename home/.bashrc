@@ -69,3 +69,6 @@ if [[ "$SSH_AGENT_PID" == "" ]]; then
 fi
 
 # stty -ixon
+
+# Pip user install location
+export PATH=$PATH:$HOME/.local/bin
