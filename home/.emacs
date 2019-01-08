@@ -21,9 +21,9 @@
 (blink-cursor-mode 1)
 
 
-(set-default-font "Inconsolata-10")
+(set-default-font "IBMPlexMono-9")
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-10"))
+             '(font . "IBMPlexMono-9"))
 (setq mouse-autoselect-window nil) ;; focus follows mouse off
 (setq sentence-end-double-space nil) ;; sentences end with a single space
 (setq show-paren-delay 0)
@@ -37,7 +37,6 @@
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
 (setq visible-bell t)
 (setq compilation-scroll-output t)
-(set-default-font "Inconsolata 10")
 (setq comment-column 40)
 (setq blink-cursor-blinks -1)
 (setq debug-on-error t)
