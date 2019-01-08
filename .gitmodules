@@ -1,3 +1,6 @@
 [submodule ".fonts/IBM-Plex"]
 	path = home/.fonts/IBM-Plex
 	url = https://github.com/IBM/plex
+[submodule "home/.password-store"]
+	path = home/.password-store
+	url = git@github.com:seldridge/pass
