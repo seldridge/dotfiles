@@ -367,6 +367,10 @@ Does nothing if `visual-line-mode' is on."
   (local-set-key "\M-q" 'maybe-fill-paragraph)
   (visual-line-mode))
 
+;; Scala mode setup
+(defun scala-mode-setup()
+  (set-fill-column 120))
+
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
 (add-hook `before-save-hook `delete-trailing-whitespace)
@@ -379,6 +383,7 @@ Does nothing if `visual-line-mode' is on."
                       (setq indent-tabs-mode nil
                             tab-width 2))))
 (add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook `scala-mode-hook `scala-mode-setup)
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
 (custom-set-variables
