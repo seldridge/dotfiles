@@ -369,6 +369,7 @@ Does nothing if `visual-line-mode' is on."
 
 ;; Scala mode setup
 (defun scala-mode-setup()
+  (flyspell-prog-mode)
   (set-fill-column 120))
 
 ;;-------------------------------------- Hooks
