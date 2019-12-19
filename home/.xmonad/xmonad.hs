@@ -23,7 +23,7 @@ myTerminal = "urxvtc"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#74c476" "" . wrap "[" "]"
-                , ppVisible = id
+                , ppVisible = wrap "<" ">"
                 , ppHidden = id
                 , ppHiddenNoWindows = id
                 }
@@ -56,6 +56,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+
+    -- launch dmenu
+    , ((modm .|. shiftMask, xK_p     ), spawn "passmenu --type")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -119,7 +122,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Screen locking
     , ((modm .|. mod1Mask, xK_l),               spawn "xautolock -locknow")
-    , ((modm .|. mod1Mask .|. shiftMask, xK_l), spawn "ssh-kill & xautolock -locknow & systemctl suspend")
+    , ((modm .|. mod1Mask .|. shiftMask, xK_l), spawn "watson stop & ssh-kill & xautolock -locknow & systemctl suspend")
 
     ]
     ++
@@ -148,6 +151,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 myConfig = defaultConfig
   { modMask = mod4Mask
   , terminal = myTerminal
+  , workspaces = [ "一/1", "二/2", "三/3", "四/4", "五/5", "六/6", "七/7", "八/8", "九/9"]
   , keys = myKeys
   , manageHook = manageScratchPad
   , logHook = dynamicLogString myPP >>= xmonadPropLog

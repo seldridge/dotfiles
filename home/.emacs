@@ -19,8 +19,6 @@
 (scroll-bar-mode -1)
 (display-time-mode -1)
 (blink-cursor-mode 1)
-
-
 (set-default-font "IBMPlexMono-9")
 (add-to-list 'default-frame-alist
              '(font . "IBMPlexMono-9"))
@@ -387,18 +385,21 @@ Does nothing if `visual-line-mode' is on."
 (add-hook `scala-mode-hook `scala-mode-setup)
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
+(setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(any-variable EXPR)
+ '(case-fold-search t)
  '(custom-safe-themes
    (quote
     ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(package-selected-packages
    (quote
-    (google-c-style haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
+    (mutt-mode google-c-style haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode company scala-mode2 polymode gmail-message-mode bbdb)))
  '(safe-local-variable-values
    (quote
     ((eval end-of-buffer)
@@ -417,7 +418,8 @@ Does nothing if `visual-line-mode' is on."
               (access-label . -2)
               (innamespace . 0))))))))
  '(scala-indent:align-forms t)
- '(scala-indent:align-parameters t))
+ '(scala-indent:align-parameters t)
+ '(tags-case-fold-search nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

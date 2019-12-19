@@ -1,8 +1,10 @@
 # Try using gnome-keyring
-dbus-update-activation-environment --systemd DISPLAY
+# dbus-update-activation-environment --systemd DISPLAY
 
 # Possibly needed to get dunst working
-eval $(dbus-launch --sh-syntax --exit-with-session)
+# eval $(dbus-launch --sh-syntax --exit-with-session)
+
+. /etc/X11/xinit/xinitrc
 
 # reread .Xresource
 xrdb $HOME/.Xresources

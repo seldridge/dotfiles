@@ -2,7 +2,7 @@
 Config {
 
   -- appearance
-  font =          "xft:IBM Plex Mono:size=9"
+  font =          "xft:IBM Plex Mono:size=9,Noto Sans Mono CJK SC Regular:size=9"
   , bgColor =     "black"
   , fgColor =     "#bdbdbd"
   , position =    Top

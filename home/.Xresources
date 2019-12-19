@@ -391,7 +391,7 @@ URxvt*saveLines: 32768
 
 ! Specifies the terminal type name to be set in the TERM environment
 ! variable; option -tn.
-! URxvt*termName: termname
+URxvt*termName: xterm-256color
 
 ! Specifies number of lines (pixel height) to insert between each row
 ! of the display [default 0]; option -lsp.

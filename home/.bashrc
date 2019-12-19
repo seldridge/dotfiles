@@ -21,15 +21,15 @@ fi
 
 # Setup terminal prompt
 if   [ $TERM == "emacs" ]; then
-  PS1="emacs -> [\u@\H: \w]\n> ";
+  PS1="emacs -> [\u@\H: \w]\n# ";
 elif [ $TERM == "dumb" ]; then
-  PS1="? -> [\u@\H: \w]\n> ";
+  PS1="? -> [\u@\H: \w]\n# ";
 else
   if [ $F_git_prompt -eq 1 ]; then
     GIT_PS1_SHOWUPSTREAM="auto"
-    PS1='\e[0;36m\u@\h:\e[m\e[1;36m$(__git_ps1 "[%s]")\e[0;33m\w\$\e[m\n> '
+    PS1='\e[0;36m\u@\h:\e[m\e[1;36m$(__git_ps1 "[%s]")\e[0;33m\w\$\e[m\n# '
   else
-    PS1='\e[0;36m\u@\h:\e[m\e[1;36m\e[0;33m\w\$\e[m\n> '
+    PS1='\e[0;36m\u@\h:\e[m\e[1;36m\e[0;33m\w\$\e[m\n# '
   fi
   PS1="\[\033[G\]$PS1"
 fi
@@ -42,6 +42,7 @@ alias o="popd"
 alias d="dirs -v"
 alias wget="wget --progress=bar"
 alias mount-user="sudo mount -o gid=users,fmask=113,dmask=002"
+alias vncviewer="vncviewer -FullScreenAllMonitors -SecurityTypes=TLSVnc -FullScreen"
 
 # Setup default editor, browser, etc.
 export EDITOR=ef
@@ -69,6 +70,11 @@ if [[ "$SSH_AGENT_PID" == "" ]]; then
 fi
 
 # stty -ixon
+
+export PATH=$HOME/usr/bin:$PATH
+
+# Cabal user install location
+source $HOME/.ghcup/env
 
 # Pip user install location
 export PATH=$PATH:$HOME/.local/bin
