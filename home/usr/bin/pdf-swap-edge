@@ -1,4 +1,12 @@
 #!/bin/bash
 
 basename=${1%%.*}
-pdftk A=$basename.pdf shuffle AoddNorth AevenSouth output $basename-swapped.pdf
+
+if [ -x "$(command -v pdftk)" ]; then
+  pdftk A=$basename.pdf shuffle AoddNorth AevenSouth output $basename-swapped.pdf
+elif [ -x "$(command -v qpdf)" ]; then
+  qpdf --rotate=180:1-z:even $basename.pdf $basename-swapped.pdf
+else
+  echo "[error] Cannot find either 'pdftk' or 'qpdf' on the \$PATH" >&2
+  exit 1
+fi
