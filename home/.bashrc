@@ -9,6 +9,8 @@ if [ -f /usr/share/git/git-prompt.sh ]; then
   source /usr/share/git/git-prompt.sh
 elif [ -f /etc/bash_completion.d/git-prompt ]; then
   source /etc/bash_completion.d/git-prompt;
+elif [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+  source /usr/share/git-core/contrib/completion/git-prompt.sh
 else
   echo "[info] Unable to find a suitable git-prompt. (Did you have git installed? File a PR if it's in a different location.)"
   F_git_prompt=0
@@ -17,6 +19,8 @@ fi
 # Setup bash completion
 if [ -f /etc/bash_completion ]; then
   source /etc/bash_completion
+elif [ -f /etc/profile.d/bash_completion.sh ]; then
+  source /etc/profile.d/bash_completion.sh
 fi
 
 # Setup terminal prompt
@@ -46,15 +50,15 @@ alias vncviewer="vncviewer -FullScreenAllMonitors -SecurityTypes=TLSVnc -FullScr
 
 # Setup default editor, browser, etc.
 export EDITOR=ef
-if [ `which google-chrome-unstable` ]; then
+if [ `command -v google-chrome-unstable` ]; then
   export BROWSER=google-chrome-unstable
-elif [ `which google-chrome` ]; then
+elif [ `command -v google-chrome` ]; then
   export BROWSER=google-chrome
-elif [ `which chromium` ]; then
+elif [ `command -v chromium` ]; then
   export BROWSER=chromium
-elif [ `which firefox` ]; then
+elif [ `command -v firefox` ]; then
   export BROWSER=firefox
-elif [ `which conkeror` ]; then
+elif [ `command -v conkeror` ]; then
   export BROWSER=conkeror
 else
   echo "[info] No known browser found. (Did you install it? File a PR to add another browser.)"
