@@ -4,3 +4,6 @@
 [submodule "home/.password-store"]
 	path = home/.password-store
 	url = git@github.com:seldridge/pass
+[submodule "home/.fonts/noto-cjk"]
+	path = home/.fonts/noto-cjk
+	url = https://github.com/googlefonts/noto-cjk
