@@ -110,7 +110,7 @@ URxvt*background: black
 ! URxvt*pointerColor2:                  color
 ! URxvt*borderColor:                    color
 ! URxvt*iconFile:                       file
-URxvt*font:                           xft:IBMPlexMono:size=9
+URxvt*font:                           xft:IBMPlexMono:size=9,Noto Sans Mono CJK SC:size=9
 ! urxvt*boldFont:                       fontname
 ! URxvt*italicFont:                     fontname
 ! URxvt*boldItalicFont:                 fontname
@@ -391,7 +391,7 @@ URxvt*saveLines: 32768
 
 ! Specifies the terminal type name to be set in the TERM environment
 ! variable; option -tn.
-! URxvt*termName: termname
+URxvt*termName: rxvt-unicode-256color
 
 ! Specifies number of lines (pixel height) to insert between each row
 ! of the display [default 0]; option -lsp.

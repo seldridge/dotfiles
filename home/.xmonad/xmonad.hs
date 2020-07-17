@@ -1,8 +1,8 @@
 -- Imports.
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Scratchpad
-import XMonad.Util.Run
 import XMonad.Util.Dmenu
 
 import System.Exit
@@ -19,11 +19,11 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 myBar = "xmobar"
 
 -- Terminal name
-myTerminal = "urxvtc"
+myTerminal = "urxvtc -name urxvt-scratchpad"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#74c476" "" . wrap "[" "]"
-                , ppVisible = id
+                , ppVisible = wrap "<" ">"
                 , ppHidden = id
                 , ppHiddenNoWindows = id
                 }
@@ -40,7 +40,6 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     t = (1 - h) / 2 -- distance from top edge
     l = (1 - w) / 2 -- distance from left edge
 
-
 -- Utility to give a user a yes/no prompt via dmenu to confirm that
 -- they want to execute some action
 confirm :: String -> X () -> X ()
@@ -56,6 +55,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+
+    -- launch dmenu
+    , ((modm .|. shiftMask, xK_p     ), spawn "passmenu --type")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -119,7 +121,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Screen locking
     , ((modm .|. mod1Mask, xK_l),               spawn "xautolock -locknow")
-    , ((modm .|. mod1Mask .|. shiftMask, xK_l), spawn "ssh-kill & xautolock -locknow & systemctl suspend")
+    , ((modm .|. mod1Mask .|. shiftMask, xK_l), spawn "watson stop & ssh-kill & xautolock -locknow & systemctl suspend")
+
+    -- Screen capture
+    , ((modm, xK_Print), spawn "maim -s $HOME/screenshots/$(date +%Y-%m-%d-%T).png")
+    , ((modm .|. shiftMask, xK_Print), spawn "maim $HOME/screenshots/$(date +%Y-%m-%d-%T).png")
 
     ]
     ++
@@ -143,11 +149,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-
 -- Main configuration, override the defaults to your liking.
+-- myConfig = ewmh defaultConfig
 myConfig = defaultConfig
   { modMask = mod4Mask
   , terminal = myTerminal
+  -- , workspaces = [ "一/1", "二/2", "三/3", "四/4", "五/5", "六/6", "七/7", "八/8", "九/9"]
+  , workspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9"]
   , keys = myKeys
   , manageHook = manageScratchPad
   , logHook = dynamicLogString myPP >>= xmonadPropLog

@@ -1,15 +1,29 @@
 [user]
-	email = schuyler.eldridge@gmail.com
-	name = Schuyler Eldridge
+  email = schuyler.eldridge@ibm.com
+  name = Schuyler Eldridge
   signingkey = 6AAD536D
 [core]
-	editor = emacsclient -nw
+  editor = emacsclient -nw
 [alias]
   l = log --pretty=oneline --abbrev-commit --graph
   today = log --pretty=oneline --abbrev-commit --graph --since 12am
   ll = log --pretty=oneline --abbrev-commit --graph --decorate --all
   new = log --pretty=oneline --abbrev-commit --graph @{u}..HEAD
 [push]
-	default = simple
+  default = simple
 [rerere]
-	enabled = false
+  enabled = false
+[mailmap]
+  file = ~/.mailmap
+[rebase]
+	autosquash = true
+[sendemail]
+  smtpserver = smtp.gmail.com
+  smtpuser = schuyler.eldridge@gmail.com
+  smtpencryption = tls
+  smtpserverport = 587
+[include]
+  path = ~/.gitconfig.d/gmail.gitconfig
+[filesystem "AdoptOpenJDK|11.0.6|/dev/mapper/fedora_dhcp--9--2--226--94-root"]
+	timestampResolution = 10000 nanoseconds
+	minRacyThreshold = 1856 microseconds
