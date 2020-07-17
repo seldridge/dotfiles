@@ -7,8 +7,8 @@
 # LVDS2). I consequently have to figure out what their actual names
 # are before I can act on them.
 WIDTH=$(xrandr | grep "Screen" | awk '{print $8}')
-MAIN=$(xrandr | grep "eDP" | sed -e "s/\([0-9]\+:\)\?\(eDP[0-9]\+\) \(dis\)\?connected.*/\2/")
-SECONDARY=$(xrandr | grep "HDMI2" | sed -e "s/\([0-9]\+:\)\?\(HDMI[0-9]\+\) \(dis\)\?connected.*/\2/")
+MAIN=$(xrandr | grep "eDP" | sed -e "s/\([0-9]\+:\)\?\(eDP-\?[0-9]\+\) \(dis\)\?connected.*/\2/")
+SECONDARY=$(xrandr | grep "HDMI-2" | sed -e "s/\([0-9]\+:\)\?\(HDMI-\?[0-9]\+\) \(dis\)\?connected.*/\2/")
 
 echo main:      $MAIN
 echo secondary: $SECONDARY

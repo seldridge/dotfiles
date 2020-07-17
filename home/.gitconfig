@@ -15,3 +15,15 @@
   enabled = false
 [mailmap]
   file = ~/.mailmap
+[rebase]
+	autosquash = true
+[sendemail]
+  smtpserver = smtp.gmail.com
+  smtpuser = schuyler.eldridge@gmail.com
+  smtpencryption = tls
+  smtpserverport = 587
+[include]
+  path = ~/.gitconfig.d/gmail.gitconfig
+[filesystem "AdoptOpenJDK|11.0.6|/dev/mapper/fedora_dhcp--9--2--226--94-root"]
+	timestampResolution = 10000 nanoseconds
+	minRacyThreshold = 1856 microseconds

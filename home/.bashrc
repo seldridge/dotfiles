@@ -77,8 +77,13 @@ fi
 
 export PATH=$HOME/usr/bin:$PATH
 
-# Cabal user install location
-source $HOME/.ghcup/env
+export PATH=$HOME/.cabal/bin:$PATH
 
 # Pip user install location
 export PATH=$PATH:$HOME/.local/bin
+
+# Ruby gems
+export PATH=$HOME/bin:$PATH
+
+# added by travis gem
+[ -f /home/schuyler/.travis/travis.sh ] && source /home/schuyler/.travis/travis.sh

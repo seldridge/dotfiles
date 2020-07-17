@@ -1,7 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-scrot /tmp/lock.png
+if [ -x "$(command -v maim)" ]; then
+  maim /tmp/lock.png
+elif [ -x "$(command -v scrot)" ]; then
+  scrot /tmp/lock.png
+else
+  convert -size 1920x1080 plasma:fractal /tmp/lock.png
+fi
+
 convert /tmp/lock.png \
         -sample 8% -sample 1250% \
         /tmp/lock.png
+
 i3lock -i /tmp/lock.png

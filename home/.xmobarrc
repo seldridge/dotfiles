@@ -2,17 +2,17 @@
 Config {
 
   -- appearance
-  font =          "xft:IBM Plex Mono:size=9,Noto Sans Mono CJK SC Regular:size=9"
+  font =          "xft:IBM Plex Mono:size=9,Noto Sans Mono CJK SC:size=9"
   , bgColor =     "black"
   , fgColor =     "#bdbdbd"
-  , position =    Top
-  , border =      BottomB
+  , position = Static { xpos = 0, ypos = 0, width = 1800, height = 20 },
+  -- , border =      BottomB
   , borderColor = "#de2d26"
 
     -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%UnsafeStdinReader% }{ %cpu% | %memory% | %disku% | %swap% | E:%enp0s31f6% | W:%wlp4s0wi% | %battery% | %uptime% | %date%"
+  , template = "%UnsafeStdinReader% }{ %cpu% | %memory% | %disku% | %swap% | E:%enp0s31f6% | W:%wlp4s0wi% | %battery% | %uptime% | %date% |"
 
     -- general behavior
   , lowerOnStart =     True    -- send to bottom of window stack on start
