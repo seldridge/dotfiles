@@ -1,5 +1,5 @@
 [user]
-  email = schuyler.eldridge@ibm.com
+  email = schuyler.eldridge@sifive.com
   name = Schuyler Eldridge
   signingkey = 6AAD536D
 [core]
@@ -27,3 +27,8 @@
 [filesystem "AdoptOpenJDK|11.0.6|/dev/mapper/fedora_dhcp--9--2--226--94-root"]
 	timestampResolution = 10000 nanoseconds
 	minRacyThreshold = 1856 microseconds
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+  signoff = true

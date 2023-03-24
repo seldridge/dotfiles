@@ -10,23 +10,42 @@
 ;; 4) Add rainbow-delimiters.el?
 ;;--------------------------------------
 
+(defun set-exec-path-from-shell-PATH ()
+  "Set up Emacs' `exec-path' and PATH environment variable to match
+that used by the user's shell.
+
+This is particularly useful under Mac OS X and macOS, where GUI
+apps are not started from a shell."
+  (interactive)
+  (let ((path-from-shell (replace-regexp-in-string
+			  "[ \t\n]*$" "" (shell-command-to-string
+					  "$SHELL --login -c 'echo $PATH'"
+						    ))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(set-exec-path-from-shell-PATH)
+
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (load-library "metals.el")
+(add-to-list 'load-path "~/repos/github.com/llvm/circt/llvm/llvm/utils/emacs")
+(load-library "tablegen-mode.el")
+(load-library "llvm-mode.el")
 
 ;;-------------------------------------- Flags
 (show-paren-mode t)
 (auto-compression-mode 1)
-(set-fill-column 80)
+(setq-default fill-column 80)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (display-time-mode -1)
 (blink-cursor-mode 1)
-(set-default-font "IBMPlexMono-9")
-(add-to-list 'default-frame-alist
-             '(font . "IBMPlexMono-9"))
+;; (set-default-font "SF Mono-9")
+;; (add-to-list 'default-frame-alist
+;;              '(font . "IBMPlexMono-9"))
 (setq mouse-autoselect-window nil) ;; focus follows mouse off
-(setq sentence-end-double-space nil) ;; sentences end with a single space
+(setq sentence-end-double-space t) ;; sentences end with a single space
 (setq show-paren-delay 0)
 (setq show-paren-style (quote parenthesis))
 (setq truncate-partial-width-windows nil)
@@ -36,7 +55,7 @@
 (setq tramp-auto-save-directory "/tmp")
 (setq column-number-mode t)
 (setq buffer-file-coding-system 'unix) ;; DOES THIS WORK??
-(setq visible-bell t)
+(setq visible-bell nil)
 (setq compilation-scroll-output t)
 (setq comment-column 40)
 (setq blink-cursor-blinks -1)
@@ -46,6 +65,13 @@
 (setq user-full-name "Schuyler Eldridge")
 (setq sh-basic-offset 2)
 (setq sh-indentation 2)
+; Hack around baud rate
+(setq search-slow-speed 1199)
+(setq search-slow-window-lines 8)
+
+(setenv "PATH" (concat (getenv "PATH") ":/Users/schuylere/.nix-profile/bin/"))
+(setq exec-path (append exec-path '("/Users/schuylere/.nix-profile/bin/")))
+
 
 ;;-------------------------------------- Require
 (require 'cc-mode)
@@ -258,7 +284,7 @@ Does nothing if `visual-line-mode' is on."
 ;; (global-set-key (kbd "M-/") `hippie-expand)
 (global-set-key (kbd "M-=") `count-words)
 ;; Company Mode
-(global-set-key (kbd "M-/") 'company-complete)
+;; (global-set-key (kbd "M-/") 'company-complete)
 
 ;;-------------------------------------- Modes
 
@@ -297,11 +323,13 @@ Does nothing if `visual-line-mode' is on."
 ;;-------------------------------------- File Extensions
 ;; miscellaneous
 (setq auto-mode-alist (cons '("\\.h$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h.inc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.h++$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c++$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cpp.inc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.hh$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.pde$". c++-mode) auto-mode-alist))
@@ -323,7 +351,7 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("\\.tex". latex-mode) auto-mode-alist))
 
 ;; company mode
-(setq company-idle-delay 0.5)
+;; (setq company-idle-delay 0.5)
 
 ;;-------------------------------------- Enabled Commands
 
@@ -332,21 +360,91 @@ Does nothing if `visual-line-mode' is on."
 (put 'downcase-region 'disabled nil)
 
 ;;-------------------------------------- Packages
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                      (not (gnutls-available-p))))
-         (proto (if no-ssl "http" "https")))
-    ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-    (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-    ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-    (when (< emacs-major-version 24)
-      ;; For important compatibility libraries like cl-lib
-      (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
-  (package-initialize)
-  )
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+(require 'use-package)
+
 
 (require 'magit)
+
+;;-------------------------------------- Scala
+
+;; Enable scala-mode for highlighting, indentation and motion commands
+(use-package scala-mode
+  :interpreter ("scala" . scala-mode))
+
+;; Enable sbt mode for executing sbt commands
+;; (use-package sbt-mode
+;;   :commands sbt-start sbt-command
+;;   :config
+;;   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+;;   ;; allows using SPACE when in the minibuffer
+;;   (substitute-key-definition
+;;    'minibuffer-complete-word
+;;    'self-insert-command
+;;    minibuffer-local-completion-map)
+;;    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+;;    (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+;; ;; Enable nice rendering of diagnostics like compile errors.
+;; (use-package flycheck
+;;   :init (global-flycheck-mode))
+
+;; (use-package lsp-mode
+;;   ;; Optional - enable lsp-mode automatically in scala files
+;;   ;; You could also swap out lsp for lsp-deffered in order to defer loading
+;;   :hook  (scala-mode . lsp)
+;;          (lsp-mode . lsp-lens-mode)
+;;   :config
+;;   ;; Uncomment following section if you would like to tune lsp-mode performance according to
+;;   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;;   ;; (setq gc-cons-threshold 100000000) ;; 100mb
+;;   ;; (setq read-process-output-max (* 1024 1024)) ;; 1mb
+;;   ;; (setq lsp-idle-delay 0.500)
+;;   ;; (setq lsp-log-io nil)
+;;   ;; (setq lsp-completion-provider :capf)
+;;   (setq lsp-prefer-flymake nil)
+;;   ;; Makes LSP shutdown the metals server when all buffers in the project are closed.
+;;   ;; https://emacs-lsp.github.io/lsp-mode/page/settings/mode/#lsp-keep-workspace-alive
+;;   (setq lsp-keep-workspace-alive nil))
+
+;; ;; Add metals backend for lsp-mode
+;; (use-package lsp-metals)
+
+;; ;; Enable nice rendering of documentation on hover
+;; ;;   Warning: on some systems this package can reduce your emacs responsiveness significally.
+;; ;;   (See: https://emacs-lsp.github.io/lsp-mode/page/performance/)
+;; ;;   In that case you have to not only disable this but also remove from the packages since
+;; ;;   lsp-mode can activate it automatically.
+;; (use-package lsp-ui)
+
+;; ;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
+;; ;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
+;; ;; to avoid odd behavior with snippets and indentation
+;; (use-package yasnippet)
+
+;; ;; Use company-capf as a completion provider.
+;; ;;
+;; ;; To Company-lsp users:
+;; ;;   Company-lsp is no longer maintained and has been removed from MELPA.
+;; ;;   Please migrate to company-capf.
+;; (use-package company
+;;   :hook (scala-mode . company-mode)
+;;   :config
+;;   (setq lsp-completion-provider :capf))
+
+;; ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+;; (use-package posframe)
+
+;; ;; Use the Debug Adapter Protocol for running tests and debugging
+;; (use-package dap-mode
+;;   :hook
+;;   (lsp-mode . dap-mode)
+;;   (lsp-mode . dap-ui-mode))
+
+(setenv "PATH" (concat (getenv "PATH") ":~/Library/Application Support/Coursier/bin"))
+(setq exec-path (append exec-path '("~/Library/Application Support/Coursier/bin")))
 
 ;;-------------------------------------- Theme
 (load-theme 'tangotango t)
@@ -367,13 +465,53 @@ Does nothing if `visual-line-mode' is on."
 
 ;; Currently not working...
 (defun gfm-startup()
-  (local-set-key "\M-q" 'maybe-fill-paragraph)
+  (local-set-key "\M-q" 'fill-paragraph)
   (visual-line-mode))
 
 ;; Scala mode setup
-(defun scala-mode-setup()
-  (flyspell-prog-mode)
-  (set-fill-column 120))
+;; (defun scala-mode-setup()
+;;   (flyspell-prog-mode)
+;;   (set-fill-column 120))
+
+;;-------------------------------------- Setup clang-format
+(require 'clang-format)
+(global-set-key (kbd "C-c i") 'clang-format-region)
+(global-set-key (kbd "C-c u") 'clang-format-buffer)
+
+(setq clang-format-style-option "llvm")
+
+(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
+    projectile hydra flycheck avy which-key helm-xref dap-mode))
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
+;; (helm-mode)
+;; (require 'helm-xref)
+;; (define-key global-map [remap find-file] #'helm-find-files)
+;; (define-key global-map [remap execute-extended-command] #'helm-M-x)
+;; (define-key global-map [remap switch-to-buffer] #'helm-mini)
+
+(which-key-mode)
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+;;      company-idle-delay 0.0
+;;      company-minimum-prefix-length 1
+      lsp-idle-delay 0.1)  ;; clangd is fast
+
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (require 'dap-cpptools)
+  (yas-global-mode))
+
+;;-------------------------------------- Spell check
+(setq-default ispell-program-name "ispell")
 
 ;;-------------------------------------- Hooks
 (add-hook `emacs-startup-hook `se-startup)
@@ -386,11 +524,18 @@ Does nothing if `visual-line-mode' is on."
           (function (lambda ()
                       (setq indent-tabs-mode nil
                             tab-width 2))))
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook `scala-mode-hook `scala-mode-setup)
+;; (add-hook 'c-mode-common-hook 'google-set-c-style)
+;; (add-hook `scala-mode-hook `scala-mode-setup)
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
 (setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
+
+;;---------------------------------------- MLIR
+(add-to-list 'load-path "~/repos/github.com/llvm/circt/llvm/mlir/utils/emacs")
+(load-library "mlir-mode.el")
+(load-library "mlir-lsp-client.el")
+(lsp-mlir-setup)
+(setq lsp-mlir-server-executable "~/repos/github.com/llvm/circt/build/bin/circt-lsp-server")
 
 ;;---------------------------------------- Custom
 (custom-set-variables
@@ -401,17 +546,14 @@ Does nothing if `visual-line-mode' is on."
  '(any-variable EXPR)
  '(case-fold-search t)
  '(custom-safe-themes
-   (quote
-    ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
+   '("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default))
+ '(git-commit-summary-max-length 50)
  '(package-selected-packages
-   (quote
-    (lsp-metals go-mode csv-mode edit-server graphviz-dot-mode flycheck use-package yaml-mode mutt-mode google-c-style haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode scala-mode2 polymode gmail-message-mode bbdb)))
+   '(lsp-mode mlir-lsp-client lsp-sourcekit racket-mode lsp-ui tree-sitter swift-mode cmake-mode xml-format dockerfile-mode ess flycheck-clang-tidy flycheck-aspell clang-format lsp-metals go-mode csv-mode edit-server graphviz-dot-mode flycheck use-package yaml-mode mutt-mode google-c-style haskell-mode markdown-mode tangotango-theme firrtl-mode magit json-mode scala-mode2 polymode gmail-message-mode bbdb))
  '(safe-local-variable-values
-   (quote
-    ((eval end-of-buffer)
+   '((eval end-of-buffer)
      (eval c-add-style "m5"
-           (quote
-            ((c-basic-offset . 4)
+           '((c-basic-offset . 4)
              (indent-tabs-mode)
              (c-offsets-alist
               (substatement-open . 0)
@@ -422,11 +564,12 @@ Does nothing if `visual-line-mode' is on."
               (statement-case-intro . 2)
               (statement-case-open . 2)
               (access-label . -2)
-              (innamespace . 0))))))))
+              (innamespace . 0))))))
  '(scala-indent:align-forms t)
  '(scala-indent:align-parameters t)
  '(scala-indent:default-run-on-strategy 1)
- '(tags-case-fold-search nil))
+ '(tags-case-fold-search nil)
+ '(warning-suppress-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
