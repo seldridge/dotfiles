@@ -303,6 +303,9 @@ Does nothing if `visual-line-mode' is on."
       auto-mode-alist (cons '("\\.cc\\.inc$". c++-mode) auto-mode-alist)
       auto-mode-alist (cons '("\\.hh\\.inc$". c++-mode) auto-mode-alist))
 
+;;------------------ firrtl-mode
+(use-package firrtl-mode)
+
 ;;------------------ groovy-mode
 (use-package groovy-mode)
 (setq groovy-indent-offset 2
@@ -475,3 +478,5 @@ Does nothing if `visual-line-mode' is on."
 
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
+
+;;-------------------------------------- custom-set-variables
