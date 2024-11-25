@@ -58,7 +58,8 @@
 (setq-default ispell-program-name "ispell")
 (setq debug-on-error nil
       comint-buffer-maximum-size 9999
-      case-fold-search t)
+      case-fold-search t
+      custom-file "~/.emacs.d/custom.el")
 
 ;; Enabled commands (that are disabled by default)
 (put 'narrow-to-region 'disabled nil)
@@ -454,18 +455,3 @@ Does nothing if `visual-line-mode' is on."
 
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
-
-;;-------------------------------------- custom-set-variables
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(lsp-ui lsp-metals sbt-mode scala-mode magit lua-mode groovy-mode firrtl-mode lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck avy which-key helm-xref dap-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
