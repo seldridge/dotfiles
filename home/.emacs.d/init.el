@@ -56,7 +56,7 @@
 ;; Miscellaneous
 (auto-compression-mode 1)
 (setq-default ispell-program-name "ispell")
-(setq debug-on-error t
+(setq debug-on-error nil
       comint-buffer-maximum-size 9999
       case-fold-search t)
 
