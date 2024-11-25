@@ -17,6 +17,7 @@
   file = ~/.mailmap
 [rebase]
 	autosquash = true
+	updateRefs = true
 [sendemail]
   smtpserver = smtp.gmail.com
   smtpuser = schuyler.eldridge@gmail.com
