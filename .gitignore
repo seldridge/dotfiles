@@ -2,7 +2,11 @@
 *~
 *#
 
+# xmonad related
 home/.xmonad/xmonad-*
 home/.xmonad/xmonad.errors
 home/.xmonad/xmonad.hi
 home/.xmonad/xmonad.o
+
+# macOS related
+.DS_Store
