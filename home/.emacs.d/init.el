@@ -12,10 +12,9 @@
       backup-directory-alist `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-;;-------------------------------------- Load .el files
-
+;;-------------------------------------- Load non-package .emacs/*.el files
 (setq load-path
-      (cons (expand-file-name "~/.emacs.opt") load-path))
+      (cons (expand-file-name "~/.emacs.d/opt") load-path))
 (require 'llvm-mode)
 (require 'tablegen-mode)
 (require 'mlir-mode)
@@ -480,3 +479,16 @@ Does nothing if `visual-line-mode' is on."
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
 
 ;;-------------------------------------- custom-set-variables
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(lsp-ui lsp-metals sbt-mode scala-mode magit lua-mode groovy-mode firrtl-mode lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck avy which-key helm-xref dap-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
