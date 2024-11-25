@@ -213,17 +213,19 @@ Does nothing if `visual-line-mode' is on."
   (split-window-horizontally-n 4)
   (set-exec-path-from-shell-PATH))
 
+;;-------------------------------------- Minor modes
+
+;;------------------ ace-window
+(use-package ace-window)
+
+;;------------------ magit-mode
+(use-package magit)
+(setq git-commit-summary-max-length 50
+      git-commit-fill-column 74)
+
 ;;-------------------------------------- Binds
 
-;; Vim-binding window movement
-;;
-;; TODO: Find a binding that works without a window-system.
-(global-set-key (kbd "C-S-h") `windmove-left)
-(global-set-key (kbd "C-S-j") `windmove-down)
-(global-set-key (kbd "C-S-k") `windmove-up)
-(global-set-key (kbd "C-S-l") `windmove-right)
-
-(global-set-key (kbd "<C-tab>") `other-frame)
+(global-set-key (kbd "M-o") 'ace-window)
 (global-set-key (kbd "M-=") `count-words)
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing)
@@ -322,11 +324,6 @@ Does nothing if `visual-line-mode' is on."
 
 ;;------------------ lua-mode
 (use-package lua-mode)
-
-;;------------------ magit-mode
-(use-package magit)
-(setq git-commit-summary-max-length 50
-      git-commit-fill-column 74)
 
 ;;------------------ makefile-mode
 (setq auto-mode-alist (cons '("Makefrag". makefile-mode) auto-mode-alist))
