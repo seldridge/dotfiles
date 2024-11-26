@@ -36,7 +36,7 @@
       column-number-mode t
       inhibit-splash-screen t
       truncate-partial-width-windows nil
-      mouse-autoselect-window t)
+      mouse-autoselect-window nil)
 (global-font-lock-mode 1)
 
 ;; Tabs, spaces, etc.
