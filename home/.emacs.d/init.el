@@ -452,3 +452,6 @@ Does nothing if `visual-line-mode' is on."
 
 (setq auto-mode-alist (cons '("\\.v$". verilog-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.veo$". verilog-mode) auto-mode-alist))
+
+;;------------------ yaml-mode
+(use-package yaml-mode)
