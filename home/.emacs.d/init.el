@@ -225,6 +225,8 @@ Does nothing if `visual-line-mode' is on."
 
 ;;-------------------------------------- Binds
 
+(global-set-key (kbd "C-x C-b") 'buffer-menu-other-window)
+
 (global-set-key (kbd "M-o") 'ace-window)
 (global-set-key (kbd "M-=") `count-words)
 (when window-system
