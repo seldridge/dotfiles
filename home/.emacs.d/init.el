@@ -29,6 +29,7 @@
 (display-time-mode -1)
 (show-paren-mode t)
 (blink-cursor-mode 1)
+(global-display-line-numbers-mode 1)
 (setq show-paren-delay 0
       show-paren-style 'parenthesis
       blink-cursor-blinks -1
@@ -36,7 +37,8 @@
       column-number-mode t
       inhibit-splash-screen t
       truncate-partial-width-windows nil
-      mouse-autoselect-window nil)
+      mouse-autoselect-window nil
+      line-number-mode nil)
 (global-font-lock-mode 1)
 
 ;; Tabs, spaces, etc.
