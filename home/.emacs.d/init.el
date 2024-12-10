@@ -222,8 +222,10 @@ Does nothing if `visual-line-mode' is on."
 
 ;;------------------ magit-mode
 (use-package magit)
-(setq git-commit-summary-max-length 50
-      git-commit-fill-column 74)
+(setq git-commit-summary-max-length 50)
+(add-hook 'git-commit-setup-hook
+          (lambda ()
+            (setq fill-column 74)))
 
 ;;-------------------------------------- Binds
 
