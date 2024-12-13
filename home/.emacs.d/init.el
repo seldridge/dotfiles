@@ -39,7 +39,7 @@
 (setq show-paren-delay 0
       show-paren-style 'parenthesis
       blink-cursor-blinks -1
-      visible-bell nil
+      visible-bell t
       column-number-mode t
       inhibit-splash-screen t
       truncate-partial-width-windows nil
